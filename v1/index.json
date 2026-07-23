@@ -12,37 +12,6 @@
       "sha256": "0f043f39176f207dd2efcd5f8db035e7cf134d2f9c8c19d796b518d3b9951193"
     },
     {
-      "name": "database",
-      "type": "agent",
-      "description": "Schema design, migrations, queries, and data modeling. Use proactively when the task involves database schemas, migrations, queries, or data layer changes.",
-      "tags": [
-        "database",
-        "backend"
-      ],
-      "path": "templates/agents/database.md",
-      "sha256": "ea807ef517db86bc58e1ce3a5d58aa52c1db5f160e2e460b4c04351b17579ae7"
-    },
-    {
-      "name": "devops",
-      "type": "agent",
-      "description": "CI/CD pipelines, Docker, deployment, and infrastructure. Use proactively when the task involves build pipelines, containerization, deployment config, or infrastructure.",
-      "tags": [
-        "devops"
-      ],
-      "path": "templates/agents/devops.md",
-      "sha256": "9b629e612c96c73fcd6cc927ebe8fc093e41940038f2a2bba2b58bcb2201c1bd"
-    },
-    {
-      "name": "docs",
-      "type": "agent",
-      "description": "Documentation, READMEs, and API reference generation. Use proactively when the task involves writing, updating, or organizing project documentation.",
-      "tags": [
-        "docs"
-      ],
-      "path": "templates/agents/docs.md",
-      "sha256": "3cf76d03530917432108b6169bf7ccf0f602f8d8991cf0b24455b255a18715e4"
-    },
-    {
       "name": "frontend",
       "type": "agent",
       "description": "UI components, pages, styling, and client-side logic. Use proactively when the task involves React components, pages, layouts, or client-side state.",
@@ -63,26 +32,6 @@
       "sha256": "fb579d503a7b344f17de6bfe512ea5392cf9b62686e841fbe54cd7f12044054e"
     },
     {
-      "name": "refactor",
-      "type": "agent",
-      "description": "Code cleanup, performance improvements, and debt reduction. Use proactively when the task involves restructuring code, reducing duplication, or improving performance.",
-      "tags": [
-        "refactoring"
-      ],
-      "path": "templates/agents/refactor.md",
-      "sha256": "7eaf5e2de426df9880aebd021241599e5af078066fb1ddb2c6f1a88cfb0e1f2c"
-    },
-    {
-      "name": "reviewer",
-      "type": "agent",
-      "description": "Code review, PR feedback, and quality checks. Use proactively when the task involves reviewing code changes, providing PR feedback, or checking code quality.",
-      "tags": [
-        "review"
-      ],
-      "path": "templates/agents/reviewer.md",
-      "sha256": "03cca38bcd78d0e825fb934998b836231dfc5ddeb9662414a36c180fb977201f"
-    },
-    {
       "name": "security",
       "type": "agent",
       "description": "Security audits, vulnerability fixes, and auth flows. Use proactively when the task involves authentication, authorization, input validation, or vulnerability remediation.",
@@ -91,16 +40,6 @@
       ],
       "path": "templates/agents/security.md",
       "sha256": "7009e5fd8cbe90f2f149bb42ed4965b9135d64e053232f7fe147b81b79b7560b"
-    },
-    {
-      "name": "testing",
-      "type": "agent",
-      "description": "Unit tests, integration tests, and test utilities. Use proactively when the task involves writing, fixing, or improving tests.",
-      "tags": [
-        "testing"
-      ],
-      "path": "templates/agents/testing.md",
-      "sha256": "0fa7af898e70fa24647c9742b0f003031ff07b49631442cd9ba40e190a8a8829"
     },
     {
       "name": "api-conventions",
@@ -125,17 +64,6 @@
       "sha256": "fdd14c475fc14bd1957e06c866c7f9e62fc7b677c07f0be5c810a639fd1f68c7"
     },
     {
-      "name": "commit-conventions",
-      "type": "rule",
-      "description": "Git commit message conventions and version control practices",
-      "tags": [
-        "git",
-        "workflow"
-      ],
-      "path": "templates/rules/commit-conventions.md",
-      "sha256": "bb90696d5b631eba63b26988d0af85ae4da9decc2e873ab9e97b9a144cc2d37d"
-    },
-    {
       "name": "component-patterns",
       "type": "rule",
       "description": "Patterns and conventions for UI component development",
@@ -147,17 +75,6 @@
       "sha256": "6c67270dd77564d5f008f6dade2a889e93b89d9dbf374df87a67570d5249534e"
     },
     {
-      "name": "database-conventions",
-      "type": "rule",
-      "description": "Database schema design and query conventions",
-      "tags": [
-        "database",
-        "backend"
-      ],
-      "path": "templates/rules/database-conventions.md",
-      "sha256": "e78a28bc03126434e38ebf33aeaaa1fb0c358760d85ba282d4c28e24bc6073e6"
-    },
-    {
       "name": "dependency-management",
       "type": "rule",
       "description": "Guidelines for managing project dependencies",
@@ -166,16 +83,6 @@
       ],
       "path": "templates/rules/dependency-management.md",
       "sha256": "83659cebd3208d300bdc5cd0cd917361297f8359d2a9f107c3effaa1bb12b83d"
-    },
-    {
-      "name": "documentation-standards",
-      "type": "rule",
-      "description": "Standards for writing and maintaining documentation",
-      "tags": [
-        "docs"
-      ],
-      "path": "templates/rules/documentation-standards.md",
-      "sha256": "0e958ee4700c6a8a5c6ee9528e62daef79e0719787c3c52472de14cb93cb9596"
     },
     {
       "name": "error-handling",
@@ -209,16 +116,6 @@
       "sha256": "eb25db15cead8057c38bf0986b085c5b2f66da743de15b55c81be4142d2dedac"
     },
     {
-      "name": "testing-standards",
-      "type": "rule",
-      "description": "Standards for writing and organizing tests",
-      "tags": [
-        "testing"
-      ],
-      "path": "templates/rules/testing-standards.md",
-      "sha256": "9e872e94817e1e730f9ab9e2481ebaff072174878602ee0fbe3e1f8c114eab58"
-    },
-    {
       "name": "add-api-client-route",
       "type": "skill",
       "description": "Create typed API client functions for calling backend endpoints from frontend code using the project's HTTP client.",
@@ -230,17 +127,6 @@
       "sha256": "ac642690aa10c8554352e731e82cebbe656a13105b84cd305c0757d4d6ffa08a"
     },
     {
-      "name": "add-api-docs",
-      "type": "skill",
-      "description": "Write or update API endpoint documentation including request/response schemas, examples, and error codes.",
-      "tags": [
-        "api",
-        "docs"
-      ],
-      "path": "templates/skills/add-api-docs.md",
-      "sha256": "8f25be8f26a73441597a39b30876ae2838c291474758d4b3735d221da607d264"
-    },
-    {
       "name": "add-api-route",
       "type": "skill",
       "description": "Create or modify HTTP route handlers, controllers, and request validation for backend APIs.",
@@ -250,17 +136,6 @@
       ],
       "path": "templates/skills/add-api-route.md",
       "sha256": "206212f91336a6a1036cbdc427ac46d0937a8c28329c6fc721e6532e5025f5dc"
-    },
-    {
-      "name": "add-auth-route",
-      "type": "skill",
-      "description": "Add authentication or authorization endpoints (login, register, token refresh, protected routes) to the backend.",
-      "tags": [
-        "auth",
-        "backend"
-      ],
-      "path": "templates/skills/add-auth-route.md",
-      "sha256": "3854dfc70647281b218499b7456a1e04f456ac36962e5234c657f7277e0d30bd"
     },
     {
       "name": "add-component",
@@ -329,16 +204,6 @@
       "sha256": "7e1b71e53d1ac33dfbac4d4de7645db14c340eb62bc60e974ae94efde4a9903a"
     },
     {
-      "name": "add-tally",
-      "type": "skill",
-      "description": "Integrate tally-sdk to track AI agent token usage, costs, and performance across sessions.",
-      "tags": [
-        "tooling"
-      ],
-      "path": "templates/skills/add-tally.md",
-      "sha256": "83b06679507154d32f4b5a8f7863c96a565fda890998f9497bba1ebb7d1870e8"
-    },
-    {
       "name": "add-zod-schema",
       "type": "skill",
       "description": "Define Zod validation schemas with inferred TypeScript types for request validation, form data, or domain models.",
@@ -361,26 +226,6 @@
       "sha256": "4abd7cb0501914c32be54e9d95c56650dbd53dba2cec0dece3c680499b440b3e"
     },
     {
-      "name": "run-dev",
-      "type": "skill",
-      "description": "Install dependencies and start the project's development server or dev workflow.",
-      "tags": [
-        "tooling"
-      ],
-      "path": "templates/skills/run-dev.md",
-      "sha256": "f6a6fa909a6fc8886c68f120102a06c1b60326e8c31ce0e4d4edf5a18603837d"
-    },
-    {
-      "name": "update-docs",
-      "type": "skill",
-      "description": "Reconcile existing project docs and README with the current code after the public surface (commands, entry points, configuration) changes.",
-      "tags": [
-        "docs"
-      ],
-      "path": "templates/skills/update-docs.md",
-      "sha256": "2d25d373edf6904f8932e62f61ec67bac58d1d7226c192c37e60588811a0da11"
-    },
-    {
       "name": "verify-types",
       "type": "skill",
       "description": "Run the TypeScript compiler in check mode to find and fix type errors across the project.",
@@ -390,16 +235,6 @@
       ],
       "path": "templates/skills/verify-types.md",
       "sha256": "b96e4e3a06830852919821270fc993a1e32d859576026d60f1d209e8f0f39941"
-    },
-    {
-      "name": "write-docs",
-      "type": "skill",
-      "description": "Create or update project documentation files for features, architecture, setup guides, or usage instructions.",
-      "tags": [
-        "docs"
-      ],
-      "path": "templates/skills/write-docs.md",
-      "sha256": "efde2752b3fe582c6c2d6c711ad5074a8f7cb1600fb87cb757b27614d5f52cf0"
     }
   ]
 }
