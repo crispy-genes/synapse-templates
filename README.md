@@ -8,7 +8,8 @@ Template registry for the synapse CLI.
 templates/
 ├── agents/       # Subagent definitions
 ├── rules/        # Project rule documents
-└── skills/       # Skill / slash-command definitions
+├── skills/       # Skill / slash-command definitions
+└── fragments/    # Reusable content blocks embedded by templates
 v1/
 └── index.json    # Generated manifest — do not edit by hand
 scripts/
@@ -37,9 +38,36 @@ Template body in markdown.
   If `name` is present it must match the filename.
 - Frontmatter supports `key: value` lines and block lists of scalars — no nested YAML.
 
+## Fragments
+
+Fragments are reusable content blocks under `templates/fragments/`, optionally
+organized into subfolders (e.g. `fragments/api/`). The filename is the fragment's
+id and must be unique across all subfolders. Templates (and other fragments) embed
+fragments with Obsidian-style transclusion syntax in the body:
+
+```markdown
+![[fragment-id]]
+```
+
+Fragment frontmatter:
+
+```markdown
+---
+id: rest-route-design              # must match the filename
+description: One-line summary      # required
+kind: convention                   # optional: convention | template
+---
+```
+
+Embeds inside code fences or inline code spans are ignored. The build fails on
+embeds of unknown fragment ids and on transclusion cycles between fragments.
+
 ## Manifest
 
-`v1/index.json` maps every template to `{ name, type, description, tags, path, sha256 }`.
+`v1/index.json` maps every template to `{ name, type, description, tags, path, sha256 }`,
+plus `usesFragments` (directly embedded fragment ids) when a template embeds fragments.
+Fragments appear in a top-level `fragments` array as
+`{ id, description, kind, path, sha256, usesFragments }`.
 The `v1/` path segment is the manifest schema version.
 
 Regenerate locally with:

@@ -3,41 +3,45 @@ description: Patterns and conventions for UI component development
 paths:
   - "**/components/**"
   - "**/*.tsx"
-tags: [frontend, react]
+provides:
+  - component-naming
+  - component-sizing
+  - component-props
+  - component-example
 ---
-
 ## Structure
-- One component per file — name the file to match the component
-- Co-locate styles, tests, and types with the component
-- Keep components under 200 lines — extract sub-components when they grow
-- Separate container logic (data fetching, state) from presentation components
+
+![[component-sizing]]
+
+- Use Tailwind for styling by default; if the project uses `.css` files, co-locate them in the component folder.
+- Separate container logic (data fetching, state) from presentation components.
 
 ## Props
-- Define explicit prop types/interfaces — never use any
-- Use destructuring in the function signature for clarity
-- Provide sensible defaults for optional props
-- Prefer composition (children, render props, slots) over deeply nested conditional props
 
-## State Management
-- Keep state as local as possible — lift only when shared
-- Derive values from state instead of storing redundant state
-- Use controlled components for form inputs
-- Avoid storing derived data in state — compute it during render
+![[component-props]]
 
 ## Naming
-- Components: PascalCase (UserProfile, SettingsPanel)
-- Props interfaces: ComponentNameProps (UserProfileProps)
-- Event handlers: onAction (onClick, onSubmit, onChange)
-- Boolean props: is/has prefix (isDisabled, hasError)
+
+![[component-naming]]
+
+## State Management
+
+- Keep state as local as possible — lift only when shared.
+- Use controlled components for form inputs.
+- Avoid storing derived data in state — compute it during render, memoizing with `useMemo` when expensive.
 
 ## Accessibility
-- Use semantic HTML elements (button, nav, main, article) over generic divs
-- Add aria labels to interactive elements that lack visible text
-- Ensure keyboard navigation works for all interactive components
-- Maintain sufficient color contrast ratios
+
+- Use semantic HTML elements (`<nav>`, `<main>`, `<button>`) over generic `<div>`/`<span>`.
+- Ensure all interactive elements are keyboard-accessible.
+- Maintain sufficient color contrast ratios.
 
 ## Performance
-- Memoize expensive computations and callbacks when they cause unnecessary re-renders
-- Avoid creating new objects or functions in render unless necessary
-- Use lazy loading for components that are not immediately visible
-- Keep component trees shallow to minimize re-render cascades
+
+- Memoize expensive computations and callbacks (`useMemo`, `useCallback`) when they cause unnecessary re-renders.
+- Avoid creating new objects or functions in render unless necessary.
+- Lazy-load components that are not immediately visible, and keep component trees shallow.
+
+## Example
+
+![[component-example]]

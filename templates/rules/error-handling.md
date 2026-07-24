@@ -1,34 +1,41 @@
 ---
 description: Error handling patterns and practices for the codebase
-tags: [reliability]
+provides:
+  - error-logging
+  - retry-backoff
+uses:
+  - api-error-responses
 ---
+## Principles
 
-## General Principles
-- Handle errors at the appropriate level — catch where you can meaningfully recover or report
-- Do not silently swallow errors — at minimum, log them
-- Prefer specific error types over generic Error when the caller needs to distinguish failure modes
-- Use try/catch for synchronous code and .catch() or try/catch with await for async code
+- Catch errors where you can meaningfully recover, translate, clean up, or report them.
+- Do not silently ignore unexpected errors.
+- Prefer specific error types or codes when callers need to distinguish failure modes.
+- Distinguish operational failures from programmer bugs.
+- At application boundaries, map internal errors to stable user/API-facing responses:
+
+![[api-error-responses]]
 
 ## Error Types
-- Define custom error classes for domain-specific failures (e.g., NotFoundError, ValidationError)
-- Include a machine-readable code and a human-readable message in custom errors
-- Attach relevant context (entity ID, field name) to errors for debugging
-- Do not use string-based error detection (checking error.message) — use error types or codes
 
-## Async Error Handling
-- Always handle promise rejections — never leave promises unhandled
-- Use try/catch around await calls in async functions
-- For parallel operations (Promise.all), handle partial failures gracefully
-- Set up a global unhandled rejection handler as a safety net, not a primary strategy
+- Use custom error classes or structured error objects for recurring domain failures.
+- Include a machine-readable code and human-readable message.
+- Attach small, relevant, non-sensitive context.
+- Do not use `error.message` for control flow.
+- Preserve the original cause when rethrowing.
+
+## Async
+
+- Always observe promise rejections.
+- Use `try/catch` around `await` when you need recovery, translation, cleanup, or added context.
+- Be explicit about fail-fast vs partial-failure behavior in parallel work.
+- Use `finally` for cleanup.
+- Treat global unhandled rejection/exception handlers as safety nets only.
 
 ## Logging
-- Log errors with structured context: timestamp, error code, relevant IDs, stack trace
-- Use appropriate log levels: error for failures, warn for degraded states, info for recovery
-- Do not log sensitive data in error messages (passwords, tokens, PII)
-- Include correlation IDs in error logs for request tracing
+
+![[error-logging]]
 
 ## Recovery
-- Implement retries with exponential backoff for transient failures (network, rate limits)
-- Set timeouts on external calls to prevent hanging
-- Provide fallback behavior when non-critical services fail
-- Fail fast for unrecoverable errors — do not retry what cannot succeed
+
+![[retry-backoff]]

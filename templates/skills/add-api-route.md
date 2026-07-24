@@ -1,33 +1,25 @@
 ---
 name: add-api-route
-description: Create or modify HTTP route handlers, controllers, and request validation for backend APIs.
-argument-hint: '[resource-name]'
-tags: [api, backend]
+description: Create or modify HTTP route handlers, controllers, and request validation for backend APIs. Use when the user asks to add or scaffold a new API endpoint or needs HTTP request handling wired up with validation. Do not use for frontend-only work, client-side API call functions (use add-api-client-route), or documenting existing endpoints (use add-api-docs).
+argument-hint: "[resource-name]"
+uses:
+  - rest-route-design
+  - request-validation
+  - existing-patterns-first
 ---
-
 ## Steps
 
-1. Create a new route file at the appropriate path for $ARGUMENTS (e.g. src/routes/$ARGUMENTS.ts or src/api/$ARGUMENTS.ts)
-2. Define the route handler with proper HTTP method (GET, POST, PUT, PATCH, DELETE)
-3. Add request validation using the project's validation library (zod, joi, etc.)
-4. Implement the route logic — connect to services/database as needed
-5. Add error handling with appropriate HTTP status codes
-6. Register the route in the main router/app entry point
-7. Verify: run type check and confirm no errors
+1. Create a new route file at the appropriate path for `$ARGUMENTS` (e.g. `src/routes/$ARGUMENTS.ts` or `src/api/$ARGUMENTS.ts`) — match where similar routes already live.
+2. Define the route handler with the proper HTTP method (GET, POST, PUT, PATCH, DELETE).
+3. Add request validation using the project's validation library (Zod, Joi, etc.).
+4. Implement the route logic — delegate to services/database as needed.
+5. Add error handling with appropriate HTTP status codes, using the project's consistent error response format.
+6. Register the route in the main router/app entry point.
+7. Run the project's type check and confirm no errors.
 
-## Use this skill when
+## Before you start
 
-- The user asks to add, create, or scaffold a new API endpoint
-- The task requires a new backend route handler
-- The user needs HTTP request handling wired up with validation
-
-## Do not use this skill when
-
-- The task is frontend-only with no backend changes
-- The user needs client-side API call functions (use add-api-client-route instead)
-- The task is only about documenting existing API endpoints (use add-api-docs instead)
-
-## Assumptions to verify
+Inspect the codebase to confirm — do not assume:
 
 - Which backend framework is in use (Express, Fastify, Hono, Koa, etc.)
 - Where route files are located in the project structure
@@ -36,13 +28,10 @@ tags: [api, backend]
 
 ## Conventions
 
-- Follow existing route file naming and structure patterns in the project
-- Use consistent error response format across all routes
-- Include input validation on all endpoints that accept data
+The conventions this skill applies directly:
 
-## Constraints
+![[rest-route-design]]
 
-- Inspect existing project patterns before creating new files
-- Prefer minimal diffs over sweeping changes
-- Reuse existing utilities and abstractions before adding new ones
-- Do not invent files, directories, or patterns not established in the codebase
+![[request-validation]]
+
+![[existing-patterns-first]]

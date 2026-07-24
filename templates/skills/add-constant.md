@@ -1,48 +1,31 @@
 ---
 name: add-constant
-description: Add typed constants with proper naming, placement, and exports to the project's constants directory.
-argument-hint: '[resource-name]'
-tags: [conventions]
+description: Add typed constants with proper naming, placement, and exports to the project's constants directory. Use when the user needs a new constant or enum-like value, wants to centralize a hardcoded value, or is replacing magic numbers. Do not use for environment-specific values (they belong in .env), runtime configuration that changes per deployment, or updating an existing constant's value.
+argument-hint: "[resource-name]"
+uses:
+  - constants-conventions
+  - existing-patterns-first
 ---
-
 ## Steps
 
-1. Identify the appropriate constants file for $ARGUMENTS (e.g. src/constants/$ARGUMENTS.ts or src/config/constants.ts)
-2. Define the constant with a descriptive name using UPPER_SNAKE_CASE
-3. Add a TypeScript type annotation (use `as const` for literal types when appropriate)
-4. Export the constant (named export)
-5. Update any barrel exports if the project uses them
-6. Verify: run type check and confirm no errors
+1. Identify the appropriate constants file for `$ARGUMENTS` (e.g. `src/constants/$ARGUMENTS.ts` or `src/config/constants.ts`) — group with related constants if a file already exists.
+2. Define the constant with a descriptive UPPER_SNAKE_CASE name.
+3. Add a TypeScript type annotation, using `as const` for literal types when appropriate.
+4. Export the constant (named export) and update any barrel exports the project uses.
+5. Run the project's type check and confirm no errors.
 
-## Use this skill when
+## Before you start
 
-- The user needs to define a new constant or enum-like value
-- The task involves adding configuration values or replacing magic numbers
-- The user wants to centralize a hardcoded value into a constants file
+Inspect the codebase to confirm — do not assume:
 
-## Do not use this skill when
-
-- The value is environment-specific and belongs in .env
-- The user needs runtime configuration that changes per deployment
-- The constant already exists and just needs its value updated
-
-## Assumptions to verify
-
-- Where constants are stored in the project (src/constants/, src/config/, etc.)
+- Where constants are stored in the project (`src/constants/`, `src/config/`, etc.)
 - Whether the project uses barrel exports for constants
-- Existing naming conventions (UPPER_SNAKE_CASE vs camelCase)
-- Whether `as const` is used for literal type inference
+- Existing naming conventions and whether `as const` is used for literal type inference
 
 ## Conventions
 
-- Use UPPER_SNAKE_CASE for constant names
-- Group related constants in the same file
-- Use `as const` assertions for object and array constants to preserve literal types
-- Add a brief comment if the constant's purpose isn't obvious from its name
+The conventions this skill applies directly:
 
-## Constraints
+![[constants-conventions]]
 
-- Inspect existing project patterns before creating new files
-- Prefer minimal diffs over sweeping changes
-- Reuse existing utilities and abstractions before adding new ones
-- Do not invent files, directories, or patterns not established in the codebase
+![[existing-patterns-first]]

@@ -4,237 +4,463 @@
     {
       "name": "backend",
       "type": "agent",
-      "description": "API routes, server logic, middleware, and integrations. Use proactively when the task involves server-side endpoints, middleware, or backend services.",
-      "tags": [
-        "backend"
-      ],
+      "description": "API routes, server logic, middleware, and integrations. Use proactively when the task involves server-side endpoints, middleware, or backend services. Not for frontend UI or database schema design.",
+      "tags": [],
       "path": "templates/agents/backend.md",
-      "sha256": "0f043f39176f207dd2efcd5f8db035e7cf134d2f9c8c19d796b518d3b9951193"
-    },
-    {
-      "name": "frontend",
-      "type": "agent",
-      "description": "UI components, pages, styling, and client-side logic. Use proactively when the task involves React components, pages, layouts, or client-side state.",
-      "tags": [
-        "frontend"
-      ],
-      "path": "templates/agents/frontend.md",
-      "sha256": "b3d83971cda061de7191176ba8856f022a945f87305c1dda5b6bd02543933128"
+      "sha256": "ab831ce76d6a09841417f5639a52add285de46dd5345c0633600156097d83168",
+      "usesFragments": [
+        "request-validation",
+        "api-error-responses"
+      ]
     },
     {
       "name": "fullstack",
       "type": "agent",
-      "description": "End-to-end features spanning frontend and backend. Use proactively when the task requires coordinated changes across both client and server code.",
-      "tags": [
-        "fullstack"
-      ],
+      "description": "End-to-end features spanning frontend and backend. Use proactively when the task requires coordinated changes across both client and server code. Not for work confined to a single side of the stack.",
+      "tags": [],
       "path": "templates/agents/fullstack.md",
-      "sha256": "fb579d503a7b344f17de6bfe512ea5392cf9b62686e841fbe54cd7f12044054e"
+      "sha256": "1c6b9d1a4597a0efcd09382bc5417cf43317066f34787b241f06482f58bf26fb",
+      "usesFragments": [
+        "request-validation"
+      ]
     },
     {
       "name": "security",
       "type": "agent",
-      "description": "Security audits, vulnerability fixes, and auth flows. Use proactively when the task involves authentication, authorization, input validation, or vulnerability remediation.",
-      "tags": [
-        "security"
-      ],
+      "description": "Security audits, vulnerability fixes, and auth flows. Use proactively when the task involves authentication, authorization, input validation, or vulnerability remediation. Not for general feature work without a security dimension.",
+      "tags": [],
       "path": "templates/agents/security.md",
-      "sha256": "7009e5fd8cbe90f2f149bb42ed4965b9135d64e053232f7fe147b81b79b7560b"
+      "sha256": "a78dd54c90f31acda761361d97303f9e373d72cc0a4cbad0d0fb46e742388315",
+      "usesFragments": [
+        "input-validation",
+        "auth-essentials",
+        "secrets-handling"
+      ]
+    },
+    {
+      "name": "web-frontend",
+      "type": "agent",
+      "description": "React + Tailwind web apps — components, pages, hooks, and styling. Use proactively when a task involves frontend UI, client-side logic, or web-specific features. Not for backend/API work or non-web targets.",
+      "tags": [],
+      "path": "templates/agents/web-frontend.md",
+      "sha256": "196758b336f0b8a4bf821557d141de528f3f9f48bd2c4c493417e22f8a77286d",
+      "usesFragments": [
+        "component-sizing"
+      ]
     },
     {
       "name": "api-conventions",
       "type": "rule",
       "description": "Conventions for API route handlers and endpoint design",
-      "tags": [
-        "api",
-        "backend"
-      ],
+      "tags": [],
       "path": "templates/rules/api-conventions.md",
-      "sha256": "5b2ba0cd19812b1221606ae2e7b05346f7e4d096d27a460aa0823b34ded66510"
+      "sha256": "1c4aa0e69b4e80777ba9904d3549765061d330ee68befbf0d9a339d28466f854",
+      "usesFragments": [
+        "rest-route-design",
+        "request-validation",
+        "response-format",
+        "api-error-responses",
+        "middleware-conventions"
+      ]
     },
     {
       "name": "code-style",
       "type": "rule",
       "description": "Enforce consistent code style across the project",
-      "tags": [
-        "style",
-        "conventions"
-      ],
+      "tags": [],
       "path": "templates/rules/code-style.md",
-      "sha256": "fdd14c475fc14bd1957e06c866c7f9e62fc7b677c07f0be5c810a639fd1f68c7"
+      "sha256": "495efc3f94ca35f2c37d9c786f98de3b75dca6bdc5a085863c28281517488d39",
+      "usesFragments": [
+        "existing-patterns-first",
+        "typescript-strictness",
+        "constants-conventions"
+      ]
     },
     {
       "name": "component-patterns",
       "type": "rule",
       "description": "Patterns and conventions for UI component development",
-      "tags": [
-        "frontend",
-        "react"
-      ],
+      "tags": [],
       "path": "templates/rules/component-patterns.md",
-      "sha256": "6c67270dd77564d5f008f6dade2a889e93b89d9dbf374df87a67570d5249534e"
+      "sha256": "3bfaa2707bad6b2eddb0d9de2815fb4bfc5a9f1be57f3ee0cd662173e2139c89",
+      "usesFragments": [
+        "component-sizing",
+        "component-props",
+        "component-naming",
+        "component-example"
+      ]
     },
     {
       "name": "dependency-management",
       "type": "rule",
       "description": "Guidelines for managing project dependencies",
-      "tags": [
-        "dependencies"
-      ],
+      "tags": [],
       "path": "templates/rules/dependency-management.md",
-      "sha256": "83659cebd3208d300bdc5cd0cd917361297f8359d2a9f107c3effaa1bb12b83d"
+      "sha256": "d72901115cdddacd8d5263aba6a2889d127fc59a31f1ea35737cbbd7cb56174c",
+      "usesFragments": [
+        "dependency-hygiene"
+      ]
     },
     {
       "name": "error-handling",
       "type": "rule",
       "description": "Error handling patterns and practices for the codebase",
-      "tags": [
-        "reliability"
-      ],
+      "tags": [],
       "path": "templates/rules/error-handling.md",
-      "sha256": "f77ec3b9db9ed8049438c80c9c15f32aaf16410a3a68feaa870c2840949f65b2"
+      "sha256": "14622b07169f48931ec9f3e3eec11699754ad12805527677aea3304ffdf648c0",
+      "usesFragments": [
+        "api-error-responses",
+        "error-logging",
+        "retry-backoff"
+      ]
     },
     {
       "name": "phase-planning",
       "type": "rule",
       "description": "Evaluates incoming requests and decomposes all new features into phased PRs with cross-session context",
-      "tags": [
-        "workflow",
-        "planning"
-      ],
+      "tags": [],
       "path": "templates/rules/phase-planning.md",
-      "sha256": "6f123d9dfadbc091bc98b5c2a056a780bb99e0e7b483199a977b7c634d405f2e"
+      "sha256": "bafd09b325e619d3d1f3e470f5b37a20c7fc1c33596b5222bdff435aa8b6c03b",
+      "usesFragments": [
+        "phase-criteria",
+        "phase-requirements",
+        "phase-completion-protocol",
+        "phase-plan-format"
+      ]
     },
     {
       "name": "security-practices",
       "type": "rule",
       "description": "Security practices to follow when writing or modifying code",
-      "tags": [
-        "security"
-      ],
+      "tags": [],
       "path": "templates/rules/security-practices.md",
-      "sha256": "eb25db15cead8057c38bf0986b085c5b2f66da743de15b55c81be4142d2dedac"
+      "sha256": "e4286be873f3617124cf5e5d318f0bc245176dd63a1090aebe00ff20642f96fc",
+      "usesFragments": [
+        "input-validation",
+        "auth-essentials",
+        "secrets-handling",
+        "dependency-hygiene",
+        "api-error-responses"
+      ]
     },
     {
       "name": "add-api-client-route",
       "type": "skill",
-      "description": "Create typed API client functions for calling backend endpoints from frontend code using the project's HTTP client.",
-      "tags": [
-        "api",
-        "frontend"
-      ],
+      "description": "Create typed API client functions for calling backend endpoints from frontend code using the project's HTTP client. Use when the user needs frontend functions to call backend endpoints or a typed API client module for a resource. Do not use for backend route creation (use add-api-route), React hooks wrapping the client (use add-crud-hook), or server-to-server calls.",
+      "tags": [],
       "path": "templates/skills/add-api-client-route.md",
-      "sha256": "ac642690aa10c8554352e731e82cebbe656a13105b84cd305c0757d4d6ffa08a"
+      "sha256": "cd248d9dc043ae388ed560a7a0d0c7c7e05ed5ba810ff35cbabbcf106bb20f3d",
+      "usesFragments": [
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-api-route",
       "type": "skill",
-      "description": "Create or modify HTTP route handlers, controllers, and request validation for backend APIs.",
-      "tags": [
-        "api",
-        "backend"
-      ],
+      "description": "Create or modify HTTP route handlers, controllers, and request validation for backend APIs. Use when the user asks to add or scaffold a new API endpoint or needs HTTP request handling wired up with validation. Do not use for frontend-only work, client-side API call functions (use add-api-client-route), or documenting existing endpoints (use add-api-docs).",
+      "tags": [],
       "path": "templates/skills/add-api-route.md",
-      "sha256": "206212f91336a6a1036cbdc427ac46d0937a8c28329c6fc721e6532e5025f5dc"
+      "sha256": "39b25d9f8e5de3ae8d919aa1e9ee4855021726481286407faaea977ff3042abf",
+      "usesFragments": [
+        "rest-route-design",
+        "request-validation",
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-component",
       "type": "skill",
-      "description": "Create a new reusable UI component with typed props, styling, and proper exports.",
-      "tags": [
-        "frontend",
-        "react"
-      ],
+      "description": "Scaffold a new reusable UI component with typed props, styling, and exports. Use when the user asks to create a new UI component, or to extract part of a page into its own component. Do not use for full routed pages (use add-react-page) or backend-only work, or when the component already exists and only needs edits.",
+      "tags": [],
       "path": "templates/skills/add-component.md",
-      "sha256": "3491f0f173a97ebe8b68db41dd24b0cd96ec334648d273d6a8070a298789e1d6"
+      "sha256": "d4f4d5e24476b5aeb33f96f2c4abe4399cde7cff2e82308ce7ffe4a3e19be9b5",
+      "usesFragments": [
+        "component-naming",
+        "component-props",
+        "component-scaffold"
+      ]
     },
     {
       "name": "add-constant",
       "type": "skill",
-      "description": "Add typed constants with proper naming, placement, and exports to the project's constants directory.",
-      "tags": [
-        "conventions"
-      ],
+      "description": "Add typed constants with proper naming, placement, and exports to the project's constants directory. Use when the user needs a new constant or enum-like value, wants to centralize a hardcoded value, or is replacing magic numbers. Do not use for environment-specific values (they belong in .env), runtime configuration that changes per deployment, or updating an existing constant's value.",
+      "tags": [],
       "path": "templates/skills/add-constant.md",
-      "sha256": "06a2181bbd22ff14bb75ead5da702ad2309a007912f0ac29e4c4b9d924dfb665"
+      "sha256": "efc5b9386985363a203a84c01e5e3cbaef2e9f39d80a1cff6dcf3589341c5803",
+      "usesFragments": [
+        "constants-conventions",
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-crud-endpoint",
       "type": "skill",
-      "description": "Scaffold a complete set of RESTful CRUD endpoints (list, get, create, update, delete) for a resource.",
-      "tags": [
-        "api",
-        "backend",
-        "crud"
-      ],
+      "description": "Scaffold a complete set of RESTful CRUD endpoints (list, get, create, update, delete) for a resource. Use when the user needs a full CRUD API for a new resource or standard REST endpoints for one entity. Do not use for a single endpoint (use add-api-route), GraphQL mutations/queries, or RPC-style APIs.",
+      "tags": [],
       "path": "templates/skills/add-crud-endpoint.md",
-      "sha256": "03044d692af3b634ba53a286568fc4ae7ff7707d70ed08118053acd052350390"
+      "sha256": "b2b74dc059f5097919fd9d1ccd343f0b19f99773acfd480f543e13a2151dee23",
+      "usesFragments": [
+        "crud-route-map",
+        "rest-route-design",
+        "response-format",
+        "existing-patterns-first"
+      ]
     },
     {
-      "name": "add-crud-hooks",
+      "name": "add-crud-hook",
       "type": "skill",
-      "description": "Generate React data-fetching hooks (query + mutations) for CRUD operations on a resource using React Query, SWR, or similar.",
-      "tags": [
-        "frontend",
-        "crud"
-      ],
-      "path": "templates/skills/add-crud-hooks.md",
-      "sha256": "9b2b2ed345324447091ca2e76aa356015949ee264963630878e69b71d7f6308e"
+      "description": "Generate React data-fetching hooks (query + mutations) for CRUD operations on a resource using React Query, SWR, or similar. Use when the user needs React hooks for fetching and mutating a resource or is wiring a frontend to a CRUD API. Do not use for backend-only work, non-React projects, or plain API client functions without hooks (use add-api-client-route).",
+      "tags": [],
+      "path": "templates/skills/add-crud-hook.md",
+      "sha256": "1a1e1297e744e3b9f8d6bcd762dbacebcb3debe999f7e5c580d7cf1013b16e1a",
+      "usesFragments": [
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-mongoose-schema",
       "type": "skill",
-      "description": "Create a Mongoose model with typed schema, indexes, hooks, and a TypeScript interface for MongoDB collections.",
-      "tags": [
-        "database",
-        "mongodb"
-      ],
+      "description": "Create a Mongoose model with typed schema, indexes, hooks, and a TypeScript interface for MongoDB collections. Use when the user needs a new database model for a MongoDB collection or a new data entity backed by Mongoose. Do not use for other ORMs/ODMs (Prisma, Drizzle, TypeORM), API routes (use add-api-route), or validation-only schemas without persistence (use add-zod-schema).",
+      "tags": [],
       "path": "templates/skills/add-mongoose-schema.md",
-      "sha256": "99d45d09cfcc08249c5fca1010af335c13af63eff1d8b63c91952e7262a13371"
+      "sha256": "c1d7db6b90d079224b7826726bf473f327e9dee6bedde0b3d3733a5226bdbc29",
+      "usesFragments": [
+        "schema-design",
+        "db-field-naming",
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-react-page",
       "type": "skill",
-      "description": "Scaffold a new React page component with routing, data fetching, and layout integration.",
-      "tags": [
-        "frontend",
-        "react"
-      ],
+      "description": "Scaffold a new React page component with routing, data fetching, and layout integration. Use when the user asks to add a new page, view, or screen with a dedicated route. Do not use for reusable components (use add-component), backend-only work, or modifying an existing page.",
+      "tags": [],
       "path": "templates/skills/add-react-page.md",
-      "sha256": "7e1b71e53d1ac33dfbac4d4de7645db14c340eb62bc60e974ae94efde4a9903a"
+      "sha256": "5ea7cae4d179035d8751a45689d3596921b5ef9a99fb0e2e123577daa0a0ba9f",
+      "usesFragments": [
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "add-zod-schema",
       "type": "skill",
-      "description": "Define Zod validation schemas with inferred TypeScript types for request validation, form data, or domain models.",
-      "tags": [
-        "validation",
-        "typescript"
-      ],
+      "description": "Define Zod validation schemas with inferred TypeScript types for request validation, form data, or domain models. Use when the user needs input validation for an endpoint or form, or a typed schema with runtime validation. Do not use for other validators (Joi, class-validator, Yup), database schemas (use add-mongoose-schema), or TypeScript types without runtime validation.",
+      "tags": [],
       "path": "templates/skills/add-zod-schema.md",
-      "sha256": "fa3d863ddd68d0d56e8b33a75e60f0b61c2b6895720823f5607411eeb9fa4f8f"
+      "sha256": "d43fa39a2ba2ab500778acef828eac2d17c77ce3b6ba36aaa3e89b9be7bdf9e8",
+      "usesFragments": [
+        "request-validation",
+        "existing-patterns-first"
+      ]
     },
     {
       "name": "phase-plan",
       "type": "skill",
-      "description": "Evaluate a feature request and create a phased implementation plan for manageable PRs with cross-session context",
-      "tags": [
-        "workflow",
-        "planning"
-      ],
+      "description": "Evaluate a feature request and create a phased implementation plan for manageable PRs with cross-session context. Use for ANY new feature request (every feature gets a plan regardless of size), when a session starts with active entries in .synapse/phases/PHASES.md, or to check progress on a phased feature. Do not use for refactors, cleanups, renames, bug fixes, documentation-only changes, or when the user explicitly wants everything in one PR.",
+      "tags": [],
       "path": "templates/skills/phase-plan.md",
-      "sha256": "4abd7cb0501914c32be54e9d95c56650dbd53dba2cec0dece3c680499b440b3e"
+      "sha256": "684086505df1d79ba79e2c21891bd3891aae14f6f092bfb735fa62b451c7f339",
+      "usesFragments": [
+        "phase-criteria",
+        "phase-requirements",
+        "phase-completion-protocol",
+        "phase-plan-format"
+      ]
     },
     {
       "name": "verify-types",
       "type": "skill",
-      "description": "Run the TypeScript compiler in check mode to find and fix type errors across the project.",
-      "tags": [
-        "typescript",
-        "tooling"
-      ],
+      "description": "Run the TypeScript compiler in check mode to find and fix type errors across the project. Use when the user asks to check for type errors, before committing changes that affect types or interfaces, or after refactoring shared interfaces. Do not use for non-TypeScript projects, runtime validation (use add-zod-schema), or ESLint/formatting/linting issues.",
+      "tags": [],
       "path": "templates/skills/verify-types.md",
-      "sha256": "b96e4e3a06830852919821270fc993a1e32d859576026d60f1d209e8f0f39941"
+      "sha256": "f3ecd5b7636091913ff6eb6e2211cd3e8f942c242694a50d1f21d5d5caa2f859",
+      "usesFragments": [
+        "typescript-strictness"
+      ]
+    }
+  ],
+  "fragments": [
+    {
+      "id": "api-error-responses",
+      "description": "Structured, safe error responses at API boundaries",
+      "path": "templates/fragments/api/api-error-responses.md",
+      "sha256": "3352920fc145d9740a97427d59a35c51e3af90e3dc0f039ca832b93e71dbe0b5",
+      "kind": "convention"
+    },
+    {
+      "id": "auth-essentials",
+      "description": "Non-negotiables for authentication and authorization flows",
+      "path": "templates/fragments/security/auth-essentials.md",
+      "sha256": "2d26c0b4e44fb447b9188d4602acce9d03f9ff6f6aacd873cf5afe72b7291391",
+      "kind": "convention"
+    },
+    {
+      "id": "component-example",
+      "description": "Canonical example of a well-formed component (naming, typed props, structure)",
+      "path": "templates/fragments/components/component-example.md",
+      "sha256": "798bb1bd1a77cf1ab48d63a162fd59bf1288a069a5cf1bc2da2d53cc44f162a9",
+      "kind": "convention"
+    },
+    {
+      "id": "component-naming",
+      "description": "Naming conventions for components, files, props, and handlers",
+      "path": "templates/fragments/components/component-naming.md",
+      "sha256": "3504213f05ce0635c815bc19389593821d05c2c841de14c4632b21420bba647f",
+      "kind": "convention"
+    },
+    {
+      "id": "component-props",
+      "description": "Typed component props",
+      "path": "templates/fragments/components/component-props.md",
+      "sha256": "83cf9c458d6068b2b7b1fa12447d3012aef4095951a5d64b6ffe2b32e0e589f3",
+      "kind": "convention"
+    },
+    {
+      "id": "component-scaffold",
+      "description": "Boilerplate shape a new component scaffold emits",
+      "path": "templates/fragments/components/component-scaffold.md",
+      "sha256": "673fecec1e2f4938e91608a22b11bb0ef78437b8ddd19b06d0e302212f1c639c",
+      "kind": "template"
+    },
+    {
+      "id": "component-sizing",
+      "description": "Component size and file structure",
+      "path": "templates/fragments/components/component-sizing.md",
+      "sha256": "0c9feedb6d6b6b54c88e109eef1d8f99517f6c13cbfdd375eb07af6b38756fec",
+      "kind": "convention"
+    },
+    {
+      "id": "constants-conventions",
+      "description": "Naming, placement, and typing of constants",
+      "path": "templates/fragments/code-style/constants-conventions.md",
+      "sha256": "8eebcc14987aaa364e49b8216fde2c787aadbfd91862a59e054fcb3fbacbe385",
+      "kind": "convention"
+    },
+    {
+      "id": "crud-route-map",
+      "description": "The five RESTful routes a CRUD resource scaffold emits",
+      "path": "templates/fragments/api/crud-route-map.md",
+      "sha256": "7de6f7c505fa0f1dbab9361c654fd6ffa94a0ffc8e990cca4bd0033a40472518",
+      "kind": "template"
+    },
+    {
+      "id": "db-field-naming",
+      "description": "Field and column naming conventions for database schemas",
+      "path": "templates/fragments/database/db-field-naming.md",
+      "sha256": "54f179cff9b58d5f7349a65e121ab10a0243cb9c9376ea96c68ba2f3186a762e",
+      "kind": "convention"
+    },
+    {
+      "id": "dependency-hygiene",
+      "description": "Vetting, auditing, and pruning project dependencies",
+      "path": "templates/fragments/dependencies/dependency-hygiene.md",
+      "sha256": "1018a9753f19b22cbba9a2c553c0401c340ec81e5869b80cabeb725db4695c2d",
+      "kind": "convention"
+    },
+    {
+      "id": "error-logging",
+      "description": "Structured, level-appropriate logging without sensitive data",
+      "path": "templates/fragments/errors/error-logging.md",
+      "sha256": "b0b3add98c44c624d18fafce1e8221c0e4a282ab54ace4828b4af510f7a19d6c",
+      "kind": "convention"
+    },
+    {
+      "id": "existing-patterns-first",
+      "description": "Work within the codebase's established patterns — minimal diffs, reuse before adding",
+      "path": "templates/fragments/code-style/existing-patterns-first.md",
+      "sha256": "f371a09156beaeba9c9b3dae719c45c65e41bcee55ebb934b0dea581c9299165",
+      "kind": "convention"
+    },
+    {
+      "id": "input-validation",
+      "description": "Validating and neutralizing untrusted input at system boundaries",
+      "path": "templates/fragments/security/input-validation.md",
+      "sha256": "cd07fd7bc9b4b1728938a8b06d2fd93de9db95906f4887b69604539b9998f113",
+      "kind": "convention"
+    },
+    {
+      "id": "middleware-conventions",
+      "description": "Middleware scope, ordering, and registration conventions",
+      "path": "templates/fragments/api/middleware-conventions.md",
+      "sha256": "eaae1fff21826e47fd7ad559b6515c988367fc0d8dbc5a160bbca2c9a60a7d85",
+      "kind": "convention"
+    },
+    {
+      "id": "phase-completion-protocol",
+      "description": "The stop-and-confirm protocol after finishing a phase's implementation",
+      "path": "templates/fragments/phases/phase-completion-protocol.md",
+      "sha256": "2f543a30dbf257b548793de1aade627b9b5d040bdd296933e9afa2ab8dd8e061",
+      "kind": "convention"
+    },
+    {
+      "id": "phase-criteria",
+      "description": "When a request gets a phase plan and when it does not",
+      "path": "templates/fragments/phases/phase-criteria.md",
+      "sha256": "74426320a4888bd1176c568b5ef5742ac0142746cbc90566ccf10c870f07675a",
+      "kind": "convention"
+    },
+    {
+      "id": "phase-plan-format",
+      "description": "The plan file and PHASES.md index formats a phase plan emits",
+      "path": "templates/fragments/phases/phase-plan-format.md",
+      "sha256": "ede7fc67d2b2f4b014f27a48a6de7b444c3d3897f4900a6f9a4966775f8048bf",
+      "kind": "template"
+    },
+    {
+      "id": "phase-requirements",
+      "description": "What every phase in a plan must satisfy",
+      "path": "templates/fragments/phases/phase-requirements.md",
+      "sha256": "06a58bc6d10624f5587cbeccea6237059a2775e1d7666860a0a3c51034ded265",
+      "kind": "convention"
+    },
+    {
+      "id": "request-validation",
+      "description": "Validating request bodies, query params, and path params at the route boundary",
+      "path": "templates/fragments/api/request-validation.md",
+      "sha256": "21ea1056d0e2ce1f18eed4204989ace436200bf4269a405fc2f57e90311b00be",
+      "kind": "convention"
+    },
+    {
+      "id": "response-format",
+      "description": "Consistent response envelopes, status codes, and pagination metadata",
+      "path": "templates/fragments/api/response-format.md",
+      "sha256": "19ff134a38e2ff4184ca7cf395bba0912eb10cce756ee78618d36fbde43e121a",
+      "kind": "convention"
+    },
+    {
+      "id": "rest-route-design",
+      "description": "RESTful route naming, HTTP method usage, and thin handlers",
+      "path": "templates/fragments/api/rest-route-design.md",
+      "sha256": "718918a98da8e76ea6aae34ecf91f0a75b5a0449d88228940eba6c7688cce4e5",
+      "kind": "convention"
+    },
+    {
+      "id": "retry-backoff",
+      "description": "Retry, timeout, and backoff policy for external calls",
+      "path": "templates/fragments/errors/retry-backoff.md",
+      "sha256": "e49a5830ab380fddda5837a50b1de45e41116609e9409af0015f162454247099",
+      "kind": "convention"
+    },
+    {
+      "id": "schema-design",
+      "description": "Schema shape — naming, timestamps, indexes, and relationships",
+      "path": "templates/fragments/database/schema-design.md",
+      "sha256": "70568ea2012bbb0f96224cc8abe8e677c3d98421f0a5cd68851cc8aa2fb5b192",
+      "kind": "convention"
+    },
+    {
+      "id": "secrets-handling",
+      "description": "Keeping secrets out of code, logs, and version control",
+      "path": "templates/fragments/env/secrets-handling.md",
+      "sha256": "023af4140d63b84372649f5a2d9658f8334663406782e43e41e4587dda69016f",
+      "kind": "convention"
+    },
+    {
+      "id": "typescript-strictness",
+      "description": "TypeScript strictness — no any, no unnecessary assertions",
+      "path": "templates/fragments/code-style/typescript-strictness.md",
+      "sha256": "41ff8e060842e5fbc3cb664c6054e3507fa45fd3d093174be0a827483967c991",
+      "kind": "convention"
     }
   ]
 }

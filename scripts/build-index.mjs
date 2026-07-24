@@ -18,6 +18,9 @@ const FOLDER_TO_TYPE = {
   talismans: "talisman",
 }
 
+const FRAGMENTS_FOLDER = "fragments"
+const FRAGMENT_KINDS = ["convention", "template"]
+
 const errors = []
 
 function parseFrontmatter(content, relPath) {
@@ -73,8 +76,81 @@ function parseTags(raw, relPath) {
     .filter(Boolean)
 }
 
+function extractBody(content) {
+  if (content.startsWith("---\n")) {
+    const end = content.indexOf("\n---", 4)
+    if (end !== -1) return content.slice(end + 4)
+  }
+  return content
+}
+
+function extractEmbeds(content) {
+  const withoutCode = extractBody(content)
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`\n]*`/g, "")
+  const regex = /!\[\[([^\]|#\n]+)(?:#[^\]|\n]+)?(?:\|[^\]\n]+)?\]\]/g
+  const ids = []
+  const seen = new Set()
+  let match
+  while ((match = regex.exec(withoutCode)) !== null) {
+    const id = match[1].trim()
+    if (id && !seen.has(id)) {
+      seen.add(id)
+      ids.push(id)
+    }
+  }
+  return ids
+}
+
+// Fragments may be organized in subfolders (e.g. fragments/api/); ids are the
+// filename and must stay unique across the whole tree.
+function findMarkdownFiles(dir, prefix = "") {
+  const files = []
+  for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )) {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name
+    if (entry.isDirectory()) {
+      files.push(...findMarkdownFiles(join(dir, entry.name), rel))
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      files.push(rel)
+    }
+  }
+  return files
+}
+
 const entries = []
+const fragments = []
 for (const folder of readdirSync(TEMPLATES_DIR).sort()) {
+  if (folder === FRAGMENTS_FOLDER) {
+    for (const file of findMarkdownFiles(join(TEMPLATES_DIR, folder))) {
+      const relPath = `templates/${folder}/${file}`
+      const content = readFileSync(join(TEMPLATES_DIR, folder, file), "utf-8")
+      const fields = parseFrontmatter(content, relPath)
+      if (!fields.description) {
+        errors.push(`${relPath}: frontmatter is missing required "description"`)
+      }
+      const id = file.split("/").pop().slice(0, -3)
+      if (fields.id !== undefined && fields.id !== id) {
+        errors.push(`${relPath}: frontmatter id "${fields.id}" does not match filename "${id}"`)
+      }
+      if (fields.kind !== undefined && !FRAGMENT_KINDS.includes(fields.kind)) {
+        errors.push(`${relPath}: kind must be one of ${FRAGMENT_KINDS.join(" | ")}`)
+      }
+      const fragment = {
+        id,
+        description: fields.description ?? "",
+        path: relPath,
+        sha256: createHash("sha256").update(content).digest("hex"),
+      }
+      if (fields.kind !== undefined) fragment.kind = fields.kind
+      const usesFragments = extractEmbeds(content)
+      if (usesFragments.length > 0) fragment.usesFragments = usesFragments
+      fragments.push(fragment)
+    }
+    continue
+  }
+
   const type = FOLDER_TO_TYPE[folder]
   if (!type) {
     errors.push(`templates/${folder}: unknown template type folder`)
@@ -93,14 +169,17 @@ for (const folder of readdirSync(TEMPLATES_DIR).sort()) {
     if (fields.name !== undefined && fields.name !== name) {
       errors.push(`${relPath}: frontmatter name "${fields.name}" does not match filename "${name}"`)
     }
-    entries.push({
+    const entry = {
       name,
       type,
       description: fields.description ?? "",
       tags: parseTags(fields.tags, relPath),
       path: relPath,
       sha256: createHash("sha256").update(content).digest("hex"),
-    })
+    }
+    const usesFragments = extractEmbeds(content)
+    if (usesFragments.length > 0) entry.usesFragments = usesFragments
+    entries.push(entry)
   }
 }
 
@@ -111,6 +190,37 @@ for (const entry of entries) {
   seen.add(key)
 }
 
+const fragmentIds = new Set()
+for (const fragment of fragments) {
+  if (fragmentIds.has(fragment.id)) errors.push(`duplicate fragment: ${fragment.id}`)
+  fragmentIds.add(fragment.id)
+}
+
+for (const item of [...entries, ...fragments]) {
+  for (const id of item.usesFragments ?? []) {
+    if (!fragmentIds.has(id)) {
+      errors.push(`${item.path}: embeds unknown fragment "${id}"`)
+    }
+  }
+}
+
+const fragmentUses = new Map(fragments.map((f) => [f.id, f.usesFragments ?? []]))
+function findCycle(id, trail) {
+  if (trail.includes(id)) return [...trail.slice(trail.indexOf(id)), id]
+  for (const next of fragmentUses.get(id) ?? []) {
+    const cycle = findCycle(next, [...trail, id])
+    if (cycle) return cycle
+  }
+  return null
+}
+for (const fragment of fragments) {
+  const cycle = findCycle(fragment.id, [])
+  if (cycle) {
+    errors.push(`fragment transclusion cycle: ${cycle.join(" → ")}`)
+    break
+  }
+}
+
 if (errors.length > 0) {
   console.error(`index build failed with ${errors.length} error(s):`)
   for (const error of errors) console.error(`  - ${error}`)
@@ -118,6 +228,7 @@ if (errors.length > 0) {
 }
 
 entries.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name))
-const manifest = { schemaVersion: 1, templates: entries }
+fragments.sort((a, b) => a.id.localeCompare(b.id))
+const manifest = { schemaVersion: 1, templates: entries, fragments }
 writeFileSync(OUT_FILE, JSON.stringify(manifest, null, 2) + "\n")
-console.log(`v1/index.json: ${entries.length} templates`)
+console.log(`v1/index.json: ${entries.length} templates, ${fragments.length} fragments`)

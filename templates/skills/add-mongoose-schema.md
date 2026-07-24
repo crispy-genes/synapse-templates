@@ -1,33 +1,25 @@
 ---
 name: add-mongoose-schema
-description: Create a Mongoose model with typed schema, indexes, hooks, and a TypeScript interface for MongoDB collections.
-argument-hint: '[model-name]'
-tags: [database, mongodb]
+description: Create a Mongoose model with typed schema, indexes, hooks, and a TypeScript interface for MongoDB collections. Use when the user needs a new database model for a MongoDB collection or a new data entity backed by Mongoose. Do not use for other ORMs/ODMs (Prisma, Drizzle, TypeORM), API routes (use add-api-route), or validation-only schemas without persistence (use add-zod-schema).
+argument-hint: "[model-name]"
+uses:
+  - schema-design
+  - db-field-naming
+  - existing-patterns-first
 ---
-
 ## Steps
 
-1. Create a new model file at the appropriate path for $ARGUMENTS (e.g. src/models/$ARGUMENTS.ts)
-2. Define the TypeScript interface for the document
-3. Create the Mongoose schema with proper field types, required flags, and defaults
-4. Add indexes for fields that will be queried frequently
-5. Add any pre/post hooks (e.g. password hashing, timestamps)
-6. Export the model: `export const $ARGUMENTS = model<I$ARGUMENTS>("$ARGUMENTS", schema)`
-7. Verify: run type check and confirm no errors
+1. Create a new model file at the appropriate path for `$ARGUMENTS` (e.g. `src/models/$ARGUMENTS.ts`), matching existing model naming and export patterns.
+2. Define the TypeScript interface for the document.
+3. Create the Mongoose schema with proper field types, required flags, and defaults. Add `timestamps: true` to schema options unless there's a reason not to.
+4. Add indexes for fields that will be queried frequently and for unique constraints.
+5. Add any pre/post hooks (e.g. password hashing).
+6. Export the model: `export const $ARGUMENTS = model<I$ARGUMENTS>("$ARGUMENTS", schema)`.
+7. Run the project's type check and confirm no errors.
 
-## Use this skill when
+## Before you start
 
-- The user needs a new database model for a MongoDB collection
-- The task involves creating a Mongoose schema with typed fields
-- The user asks to define a new data entity backed by MongoDB
-
-## Do not use this skill when
-
-- The project uses a different ORM/ODM (Prisma, Drizzle, TypeORM)
-- The task is about API routes (use add-api-route instead)
-- The user needs a validation-only schema without persistence (use add-zod-schema instead)
-
-## Assumptions to verify
+Inspect the codebase to confirm — do not assume:
 
 - That the project uses MongoDB with Mongoose as its ODM
 - Where model files are stored in the project
@@ -36,14 +28,10 @@ tags: [database, mongodb]
 
 ## Conventions
 
-- Use singular PascalCase for model names (User, Post, Comment)
-- Always define a TypeScript interface alongside the schema
-- Add timestamps: true to schema options unless there's a reason not to
-- Index fields used in queries and unique constraints
+The conventions this skill applies directly:
 
-## Constraints
+![[schema-design]]
 
-- Inspect existing project patterns before creating new files
-- Prefer minimal diffs over sweeping changes
-- Reuse existing utilities and abstractions before adding new ones
-- Do not invent files, directories, or patterns not established in the codebase
+![[db-field-naming]]
+
+![[existing-patterns-first]]
