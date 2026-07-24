@@ -9,7 +9,8 @@ templates/
 ├── agents/       # Subagent definitions
 ├── rules/        # Project rule documents
 ├── skills/       # Skill / slash-command definitions
-└── fragments/    # Reusable content blocks embedded by templates
+├── fragments/    # Reusable content blocks embedded by templates
+└── packs/        # Named bundles of agents + skills + rules + hooks
 v1/
 └── index.json    # Generated manifest — do not edit by hand
 scripts/
@@ -62,12 +63,36 @@ kind: convention                   # optional: convention | template
 Embeds inside code fences or inline code spans are ignored. The build fails on
 embeds of unknown fragment ids and on transclusion cycles between fragments.
 
+## Packs
+
+Packs are named bundles under `templates/packs/`. The frontmatter lists the member
+templates by name; the body is optional prose:
+
+```markdown
+---
+description: One-line summary          # required
+tags: [backend, express]               # optional, inline array
+agents:
+  - backend
+skills:
+  - add-api-route
+rules:
+  - api-conventions
+hooks:
+  - docs-drift
+---
+```
+
+Every listed agent/skill/rule must exist in this repo (the build fails otherwise).
+Hooks are exempt — hook templates ship inside the synapse CLI.
+
 ## Manifest
 
 `v1/index.json` maps every template to `{ name, type, description, tags, path, sha256 }`,
 plus `usesFragments` (directly embedded fragment ids) when a template embeds fragments.
 Fragments appear in a top-level `fragments` array as
-`{ id, description, kind, path, sha256, usesFragments }`.
+`{ id, description, kind, path, sha256, usesFragments }`; packs in a top-level `packs`
+array as `{ name, description, tags, path, sha256, agents, skills, rules, hooks }`.
 The `v1/` path segment is the manifest schema version.
 
 Regenerate locally with:

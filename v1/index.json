@@ -462,5 +462,294 @@
       "sha256": "41ff8e060842e5fbc3cb664c6054e3507fa45fd3d093174be0a827483967c991",
       "kind": "convention"
     }
+  ],
+  "packs": [
+    {
+      "name": "auth",
+      "description": "Authentication and authorization with security best practices",
+      "tags": [
+        "security",
+        "auth"
+      ],
+      "path": "templates/packs/auth.md",
+      "sha256": "0827965be52ce4a6414c54c3967580b39027401f974082240f2e76c5fc2f50f0",
+      "agents": [
+        "security"
+      ],
+      "skills": [
+        "verify-types"
+      ],
+      "rules": [
+        "security-practices"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "docs-maintenance",
+      "description": "Keep docs in sync with code — a Stop hook that flags drift after edits",
+      "tags": [
+        "docs",
+        "workflow"
+      ],
+      "path": "templates/packs/docs-maintenance.md",
+      "sha256": "b85cd2a7de720af14e0a0b3919dd67fb6973c4d011ac9644ea92c067649be5e9",
+      "agents": [],
+      "skills": [],
+      "rules": [],
+      "hooks": [
+        "docs-drift"
+      ]
+    },
+    {
+      "name": "express",
+      "description": "Express.js backend with route handlers, middleware, and API conventions",
+      "tags": [
+        "backend",
+        "express"
+      ],
+      "path": "templates/packs/express.md",
+      "sha256": "e775a4ab31a9d9474f5da27a33e404d7ecbb25116ea27d0e2770150292e1a705",
+      "agents": [
+        "backend"
+      ],
+      "skills": [
+        "add-api-route",
+        "add-crud-endpoint",
+        "verify-types"
+      ],
+      "rules": [
+        "api-conventions",
+        "error-handling",
+        "security-practices"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "fastify",
+      "description": "Fastify backend with schema-based validation and API conventions",
+      "tags": [
+        "backend",
+        "fastify"
+      ],
+      "path": "templates/packs/fastify.md",
+      "sha256": "46708abe4f97f53a32148e45669bce73402a7ccb324da27c22ff0f20e9314c60",
+      "agents": [
+        "backend"
+      ],
+      "skills": [
+        "add-api-route",
+        "add-crud-endpoint",
+        "verify-types"
+      ],
+      "rules": [
+        "api-conventions",
+        "error-handling",
+        "security-practices"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "hono",
+      "description": "Hono backend with edge-ready route handlers and API conventions",
+      "tags": [
+        "backend",
+        "hono"
+      ],
+      "path": "templates/packs/hono.md",
+      "sha256": "da09dfb362267707513d6d566a9752b55aa0b4fe76e9e166f2988ae29a6d1c9e",
+      "agents": [
+        "backend"
+      ],
+      "skills": [
+        "add-api-route",
+        "add-crud-endpoint",
+        "verify-types"
+      ],
+      "rules": [
+        "api-conventions",
+        "error-handling",
+        "security-practices"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "mongoose",
+      "description": "MongoDB with Mongoose schemas, models, and data layer conventions",
+      "tags": [
+        "database",
+        "mongoose"
+      ],
+      "path": "templates/packs/mongoose.md",
+      "sha256": "8fc0c64c0eb0854a91f00fb9d7245f9f7a650557cb25be0ae2d33f62c1fcc2cf",
+      "agents": [],
+      "skills": [
+        "add-mongoose-schema",
+        "verify-types"
+      ],
+      "rules": [],
+      "hooks": []
+    },
+    {
+      "name": "next",
+      "description": "Next.js fullstack with React pages, API routes, and SSR",
+      "tags": [
+        "fullstack",
+        "react",
+        "next"
+      ],
+      "path": "templates/packs/next.md",
+      "sha256": "4372dffaec989f9f4f63301a5e899be5d441845d0df8ced3079430d2adc4d7f9",
+      "agents": [
+        "web-frontend",
+        "fullstack"
+      ],
+      "skills": [
+        "add-react-page",
+        "add-component",
+        "add-crud-hook",
+        "add-api-route",
+        "add-api-client-route",
+        "verify-types"
+      ],
+      "rules": [
+        "component-patterns",
+        "api-conventions",
+        "code-style"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "nuxt",
+      "description": "Nuxt fullstack with Vue pages, API routes, and SSR",
+      "tags": [
+        "fullstack",
+        "vue",
+        "nuxt"
+      ],
+      "path": "templates/packs/nuxt.md",
+      "sha256": "08a72d9a93226e68202ba65f3cb39eddb03bdaf392c720cff4e636f0c5d39cf6",
+      "agents": [
+        "web-frontend",
+        "fullstack"
+      ],
+      "skills": [
+        "add-component",
+        "add-api-route",
+        "add-api-client-route",
+        "verify-types"
+      ],
+      "rules": [
+        "component-patterns",
+        "api-conventions",
+        "code-style"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "phases",
+      "description": "Phased implementation planning with cross-session context handoffs",
+      "tags": [
+        "workflow",
+        "planning"
+      ],
+      "path": "templates/packs/phases.md",
+      "sha256": "42e52621f5a41dd994d4c2042b2e2d0147a998cd3f3a9b68b2c173474970afa0",
+      "agents": [],
+      "skills": [
+        "phase-plan"
+      ],
+      "rules": [
+        "phase-planning"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "react",
+      "description": "React frontend with components, pages, hooks, and styling",
+      "tags": [
+        "frontend",
+        "react"
+      ],
+      "path": "templates/packs/react.md",
+      "sha256": "97bc3d67a379ef8732029fd3f3149e0d78a793ddf8c06836a9821797254e54f4",
+      "agents": [
+        "web-frontend"
+      ],
+      "skills": [
+        "add-react-page",
+        "add-component",
+        "add-crud-hook",
+        "add-api-client-route",
+        "verify-types"
+      ],
+      "rules": [
+        "component-patterns",
+        "code-style"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "svelte",
+      "description": "Svelte frontend with components and client-side logic",
+      "tags": [
+        "frontend",
+        "svelte"
+      ],
+      "path": "templates/packs/svelte.md",
+      "sha256": "ff53dc17ea9c35e981d4ddb128df3fceeafe365be36496a6e69ccfa75571ff03",
+      "agents": [
+        "web-frontend"
+      ],
+      "skills": [
+        "add-component",
+        "add-api-client-route",
+        "verify-types"
+      ],
+      "rules": [
+        "component-patterns",
+        "code-style"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "vue",
+      "description": "Vue.js frontend with components and client-side logic",
+      "tags": [
+        "frontend",
+        "vue"
+      ],
+      "path": "templates/packs/vue.md",
+      "sha256": "50eb545c8acea738595280a6d5bbde2c4cd5597173bd482106cbb075a42d1da8",
+      "agents": [
+        "web-frontend"
+      ],
+      "skills": [
+        "add-component",
+        "add-api-client-route",
+        "verify-types"
+      ],
+      "rules": [
+        "component-patterns",
+        "code-style"
+      ],
+      "hooks": []
+    },
+    {
+      "name": "zod",
+      "description": "Zod validation schemas with inferred TypeScript types",
+      "tags": [
+        "validation",
+        "zod"
+      ],
+      "path": "templates/packs/zod.md",
+      "sha256": "f74a847d0d3820462bfd49749e7c4c9857ae5436297c727dd06a0043929c41cb",
+      "agents": [],
+      "skills": [
+        "add-zod-schema",
+        "verify-types"
+      ],
+      "rules": [],
+      "hooks": []
+    }
   ]
 }

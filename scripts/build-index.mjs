@@ -20,6 +20,7 @@ const FOLDER_TO_TYPE = {
 
 const FRAGMENTS_FOLDER = "fragments"
 const FRAGMENT_KINDS = ["convention", "template"]
+const PACKS_FOLDER = "packs"
 
 const errors = []
 
@@ -121,7 +122,32 @@ function findMarkdownFiles(dir, prefix = "") {
 
 const entries = []
 const fragments = []
+const packs = []
 for (const folder of readdirSync(TEMPLATES_DIR).sort()) {
+  if (folder === PACKS_FOLDER) {
+    for (const file of readdirSync(join(TEMPLATES_DIR, folder)).sort()) {
+      if (!file.endsWith(".md")) continue
+      const relPath = `templates/${folder}/${file}`
+      const content = readFileSync(join(TEMPLATES_DIR, folder, file), "utf-8")
+      const fields = parseFrontmatter(content, relPath)
+      if (!fields.description) {
+        errors.push(`${relPath}: frontmatter is missing required "description"`)
+      }
+      packs.push({
+        name: file.slice(0, -3),
+        description: fields.description ?? "",
+        tags: parseTags(fields.tags, relPath),
+        path: relPath,
+        sha256: createHash("sha256").update(content).digest("hex"),
+        agents: fields.agents ?? [],
+        skills: fields.skills ?? [],
+        rules: fields.rules ?? [],
+        hooks: fields.hooks ?? [],
+      })
+    }
+    continue
+  }
+
   if (folder === FRAGMENTS_FOLDER) {
     for (const file of findMarkdownFiles(join(TEMPLATES_DIR, folder))) {
       const relPath = `templates/${folder}/${file}`
@@ -204,6 +230,37 @@ for (const item of [...entries, ...fragments]) {
   }
 }
 
+const templateNamesByType = new Map()
+for (const entry of entries) {
+  if (!templateNamesByType.has(entry.type)) templateNamesByType.set(entry.type, new Set())
+  templateNamesByType.get(entry.type).add(entry.name)
+}
+const packNames = new Set()
+for (const pack of packs) {
+  if (packNames.has(pack.name)) errors.push(`duplicate pack: ${pack.name}`)
+  packNames.add(pack.name)
+  for (const [field, type] of [
+    ["agents", "agent"],
+    ["skills", "skill"],
+    ["rules", "rule"],
+  ]) {
+    if (!Array.isArray(pack[field])) {
+      errors.push(`${pack.path}: "${field}" must be a block list`)
+      pack[field] = []
+      continue
+    }
+    for (const name of pack[field]) {
+      if (!templateNamesByType.get(type)?.has(name)) {
+        errors.push(`${pack.path}: references unknown ${type} "${name}"`)
+      }
+    }
+  }
+  if (!Array.isArray(pack.hooks)) {
+    errors.push(`${pack.path}: "hooks" must be a block list`)
+    pack.hooks = []
+  }
+}
+
 const fragmentUses = new Map(fragments.map((f) => [f.id, f.usesFragments ?? []]))
 function findCycle(id, trail) {
   if (trail.includes(id)) return [...trail.slice(trail.indexOf(id)), id]
@@ -229,6 +286,9 @@ if (errors.length > 0) {
 
 entries.sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name))
 fragments.sort((a, b) => a.id.localeCompare(b.id))
-const manifest = { schemaVersion: 1, templates: entries, fragments }
+packs.sort((a, b) => a.name.localeCompare(b.name))
+const manifest = { schemaVersion: 1, templates: entries, fragments, packs }
 writeFileSync(OUT_FILE, JSON.stringify(manifest, null, 2) + "\n")
-console.log(`v1/index.json: ${entries.length} templates, ${fragments.length} fragments`)
+console.log(
+  `v1/index.json: ${entries.length} templates, ${fragments.length} fragments, ${packs.length} packs`
+)
