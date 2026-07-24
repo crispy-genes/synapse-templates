@@ -15,7 +15,7 @@ export function CatalogCard({ to, name, type, description, tags = [] }: CatalogC
   return (
     <Link
       to={to}
-      className="block rounded-xl border border-zinc-200 bg-white p-4 transition-colors hover:border-indigo-400 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-500"
+      className="block rounded-xl border border-zinc-200 bg-white p-4 transition-colors hover:border-brand-400 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-brand-500"
     >
       <div className="mb-1 flex items-center gap-2 font-semibold">
         {name} <Badge type={type} />

@@ -22,7 +22,7 @@ export function linkifyEmbedTokens(root: HTMLElement) {
       const id = match[1].trim()
       const link = document.createElement("a")
       link.className =
-        "rounded bg-indigo-50 px-1.5 py-0.5 font-mono text-[0.85em] text-indigo-700 no-underline dark:bg-indigo-950 dark:text-indigo-300"
+        "rounded bg-brand-50 px-1.5 py-0.5 font-mono text-[0.85em] text-brand-700 no-underline dark:bg-brand-950 dark:text-brand-300"
       link.href = `#/fragment/${encodeURIComponent(id)}`
       link.textContent = `![[${id}]]`
       replacement.append(link)

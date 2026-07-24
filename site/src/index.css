@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --color-brand-50: #fdeef5;
+  --color-brand-100: #fbdcea;
+  --color-brand-200: #f6b8d4;
+  --color-brand-300: #f093bd;
+  --color-brand-400: #ea70a7;
+  --color-brand-500: #e44c90;
+  --color-brand-600: #cf2c77;
+  --color-brand-700: #ab2462;
+  --color-brand-800: #871d4e;
+  --color-brand-900: #64153a;
+  --color-brand-950: #470f29;
+  --color-ink: #3b3b3b;
+}
+
 body {
-  @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+  @apply bg-zinc-50 text-ink antialiased dark:bg-zinc-950 dark:text-zinc-100;
 }

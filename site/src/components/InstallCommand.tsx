@@ -18,7 +18,7 @@ export function InstallCommand({ command }: InstallCommandProps) {
       <span>{command}</span>
       <button
         onClick={copy}
-        className="ml-auto shrink-0 rounded-md border border-zinc-300 bg-white px-2.5 py-1 text-xs hover:border-indigo-400 hover:text-indigo-600 dark:border-zinc-600 dark:bg-zinc-900 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
+        className="ml-auto shrink-0 rounded-md border border-zinc-300 bg-white px-2.5 py-1 text-xs hover:border-brand-400 hover:text-brand-600 dark:border-zinc-600 dark:bg-zinc-900 dark:hover:border-brand-500 dark:hover:text-brand-400"
       >
         {isCopied ? "Copied!" : "Copy"}
       </button>

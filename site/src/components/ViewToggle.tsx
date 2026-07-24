@@ -13,7 +13,7 @@ export function ViewToggle<T extends string>({ views, activeView, onSelect }: Vi
           onClick={() => onSelect(view)}
           className={`px-4 py-1.5 text-sm ${
             view === activeView
-              ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+              ? "bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300"
               : "bg-white text-zinc-500 hover:text-zinc-800 dark:bg-zinc-900 dark:hover:text-zinc-200"
           }`}
         >

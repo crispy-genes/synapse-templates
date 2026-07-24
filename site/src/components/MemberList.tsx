@@ -13,7 +13,7 @@ export function MemberList({ members }: MemberListProps) {
         <li key={`${member.type}-${member.name}`} className="flex items-baseline gap-2">
           <Badge type={member.type} />
           {member.to ? (
-            <Link to={member.to} className="text-indigo-600 hover:underline dark:text-indigo-400">
+            <Link to={member.to} className="text-brand-600 hover:underline dark:text-brand-400">
               {member.name}
             </Link>
           ) : (

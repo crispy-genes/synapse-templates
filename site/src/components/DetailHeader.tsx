@@ -11,7 +11,7 @@ interface DetailHeaderProps {
 export function DetailHeader({ type, name, description }: DetailHeaderProps) {
   return (
     <div className="mb-4">
-      <Link to="/" className="text-sm text-indigo-600 hover:underline dark:text-indigo-400">
+      <Link to="/" className="text-sm text-brand-600 hover:underline dark:text-brand-400">
         ← catalog
       </Link>
       <h1 className="mt-2 mb-1 flex items-center gap-3 text-2xl font-bold">

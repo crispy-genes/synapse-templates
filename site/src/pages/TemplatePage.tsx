@@ -39,7 +39,7 @@ export function TemplatePage({ type }: TemplatePageProps) {
           <Link
             key={id}
             to={`/fragment/${id}`}
-            className="rounded bg-indigo-50 px-1.5 py-0.5 font-mono text-xs text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+            className="rounded bg-brand-50 px-1.5 py-0.5 font-mono text-xs text-brand-700 dark:bg-brand-950 dark:text-brand-300"
           >
             ![[{id}]]
           </Link>
