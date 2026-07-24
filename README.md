@@ -13,6 +13,7 @@ templates/
 └── packs/        # Named bundles of agents + skills + rules + hooks
 v1/
 └── index.json    # Generated manifest — do not edit by hand
+site/             # Static catalog website (GitHub Pages)
 scripts/
 └── build-index.mjs
 ```
@@ -103,6 +104,25 @@ node scripts/build-index.mjs
 
 CI rebuilds the manifest on every push to `main` and fails pull requests whose manifest
 is stale or whose frontmatter is invalid, so run the script before pushing.
+
+## Catalog website
+
+`site/` is a React + Vite + TypeScript + Tailwind app that reads the same
+`v1/index.json` the CLI uses. It shows the segmented catalog with tag filtering,
+per-template Source/Resolved views (fragments expanded), fragment pages with a
+"Used by" panel, pack pages with member links, and copyable install commands.
+
+Deployed to GitHub Pages by `.github/workflows/deploy-site.yml` on every push to
+`main` (enable Pages with source "GitHub Actions" in the repo settings). Develop
+locally:
+
+```bash
+cd site
+pnpm install
+pnpm dev        # dev server — serves ../v1 and ../templates automatically
+pnpm test       # lib unit tests
+pnpm build      # production build to site/dist
+```
 
 ## Contributing
 
