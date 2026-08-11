@@ -326,7 +326,7 @@
       "id": "component-sizing",
       "description": "Component size and file structure",
       "path": "templates/fragments/components/component-sizing.md",
-      "sha256": "0c9feedb6d6b6b54c88e109eef1d8f99517f6c13cbfdd375eb07af6b38756fec",
+      "sha256": "0dcbe93bc6c5137e04dfbf660a4e6b57514a584d79bf35f711bdac172aee10e5",
       "kind": "convention"
     },
     {
