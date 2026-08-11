@@ -17,7 +17,7 @@ export function Markdown({ source }: MarkdownProps) {
   return (
     <div
       ref={ref}
-      className="prose prose-zinc max-w-none rounded-xl border border-zinc-200 bg-white px-6 py-5 text-[0.95rem] dark:prose-invert dark:border-zinc-800 dark:bg-zinc-900"
+      className="markdown-body rounded-[14px] border border-border bg-surface px-[34px] py-[30px]"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )

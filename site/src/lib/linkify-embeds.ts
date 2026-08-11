@@ -1,5 +1,27 @@
 import { EMBED_REGEX } from "./markdown"
 
+const CHIP_CLASSES =
+  "inline-flex items-baseline gap-1.5 rounded-md border border-dashed border-pink-border " +
+  "bg-pink-tint px-1.5 py-0.5 align-baseline font-mono text-[0.85em] text-pink-ink! no-underline"
+
+const LABEL_CLASSES = "font-mono text-[9px] font-medium uppercase tracking-[0.1em] text-pink-ink/60"
+
+function buildEmbedChip(id: string): HTMLAnchorElement {
+  const link = document.createElement("a")
+  link.className = CHIP_CLASSES
+  link.href = `#/fragments/${encodeURIComponent(id)}`
+
+  const token = document.createElement("span")
+  token.textContent = `![[${id}]]`
+
+  const label = document.createElement("span")
+  label.className = LABEL_CLASSES
+  label.textContent = "fragment"
+
+  link.append(token, label)
+  return link
+}
+
 export function linkifyEmbedTokens(root: HTMLElement) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
   const textNodes: Text[] = []
@@ -19,13 +41,7 @@ export function linkifyEmbedTokens(root: HTMLElement) {
     let last = 0
     while (match) {
       replacement.append(text.slice(last, match.index))
-      const id = match[1].trim()
-      const link = document.createElement("a")
-      link.className =
-        "rounded bg-brand-50 px-1.5 py-0.5 font-mono text-[0.85em] text-brand-700 no-underline dark:bg-brand-950 dark:text-brand-300"
-      link.href = `#/fragment/${encodeURIComponent(id)}`
-      link.textContent = `![[${id}]]`
-      replacement.append(link)
+      replacement.append(buildEmbedChip(match[1].trim()))
       last = match.index + match[0].length
       match = regex.exec(text)
     }

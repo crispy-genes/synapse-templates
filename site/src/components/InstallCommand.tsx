@@ -1,26 +1,28 @@
-import { useState } from "react"
+import { useCopyToClipboard } from "../hooks/use-copy-to-clipboard"
+import { CopyStatusIcon } from "./CopyStatusIcon"
 
 interface InstallCommandProps {
   command: string
 }
 
 export function InstallCommand({ command }: InstallCommandProps) {
-  const [isCopied, setIsCopied] = useState(false)
-
-  async function copy() {
-    await navigator.clipboard.writeText(command)
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 1200)
-  }
+  const { isCopied, copy } = useCopyToClipboard()
 
   return (
-    <div className="my-4 flex items-center gap-3 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-100 px-4 py-2.5 font-mono text-sm dark:border-zinc-700 dark:bg-zinc-800">
-      <span>{command}</span>
+    <div className="flex items-center gap-4 rounded-xl border border-border bg-surface-code py-3.5 pl-5 pr-3.5">
+      <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13.5px] text-ink">
+        <span className="text-pink">$</span> {command}
+      </code>
       <button
-        onClick={copy}
-        className="ml-auto shrink-0 rounded-md border border-zinc-300 bg-white px-2.5 py-1 text-xs hover:border-brand-400 hover:text-brand-600 dark:border-zinc-600 dark:bg-zinc-900 dark:hover:border-brand-500 dark:hover:text-brand-400"
+        onClick={() => copy(command)}
+        aria-label={`Copy ${command}`}
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-surface transition-colors ${
+          isCopied
+            ? "border-success/40 text-success"
+            : "border-border-strong text-ink-muted hover:border-pink-border hover:bg-pink-wash hover:text-pink-ink"
+        }`}
       >
-        {isCopied ? "Copied!" : "Copy"}
+        <CopyStatusIcon isCopied={isCopied} />
       </button>
     </div>
   )

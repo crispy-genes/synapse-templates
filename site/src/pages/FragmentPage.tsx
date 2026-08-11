@@ -1,58 +1,95 @@
+import { useState } from "react"
 import { useParams } from "react-router-dom"
-import type { Member } from "../types/member"
-import { usedBy } from "../lib/catalog"
-import { useFragmentBody } from "../hooks/use-fragment-body"
+import { TEMPLATE_VIEWS } from "../constants/views"
+import type { TemplateView } from "../types/view"
+import { installCommand, itemRoute, packsShippingFragment, usedBy } from "../lib/catalog"
 import { useManifest } from "../hooks/use-manifest"
+import { useTemplateContent } from "../hooks/use-template-content"
 import { DetailHeader } from "../components/DetailHeader"
+import { InstallCommand } from "../components/InstallCommand"
 import { Markdown } from "../components/Markdown"
-import { MemberList } from "../components/MemberList"
 import { NotFound } from "../components/NotFound"
-import { Panel } from "../components/Panel"
-import { TagPill } from "../components/TagPill"
+import { PackChips } from "../components/PackChips"
+import { SectionHeader } from "../components/SectionHeader"
+import { TemplateRow } from "../components/TemplateRow"
+import { ViewToggle } from "../components/ViewToggle"
 
 export function FragmentPage() {
   const manifest = useManifest()
   const { id } = useParams()
   const entry = manifest.fragments.find((fragment) => fragment.id === id)
 
-  const { body, error } = useFragmentBody(entry)
+  const [activeView, setActiveView] = useState<TemplateView>("Resolved")
+  const { source, resolved, error } = useTemplateContent(entry, manifest.fragments)
 
   if (!entry) return <NotFound what={`fragment "${id}"`} />
 
+  const hasEmbeds = (entry.usesFragments?.length ?? 0) > 0
   const references = usedBy(manifest, entry.id)
-  const members: Member[] = [
+  const consumers = [
     ...references.templates.map((t) => ({
-      type: t.type,
+      kind: t.type,
       name: t.name,
-      to: `/${t.type}/${t.name}`,
+      description: t.description,
+      to: itemRoute(t.type, t.name),
     })),
     ...references.fragments.map((f) => ({
-      type: "fragment" as const,
+      kind: "fragment" as const,
       name: f.id,
-      to: `/fragment/${f.id}`,
+      description: f.description,
+      to: itemRoute("fragment", f.id),
     })),
   ]
 
   return (
     <div>
-      <DetailHeader type="fragment" name={entry.id} description={entry.description} />
-      {entry.kind && (
-        <div className="mb-2">
-          <TagPill tag={`kind: ${entry.kind}`} />
+      <DetailHeader
+        kind="fragment"
+        name={entry.id}
+        description={entry.description}
+        plainTags={entry.kind ? [entry.kind] : []}
+      />
+
+      <div className="mt-7">
+        <InstallCommand command={installCommand("fragment", entry.id)} />
+      </div>
+
+      {hasEmbeds && (
+        <div className="mt-7">
+          <ViewToggle views={TEMPLATE_VIEWS} activeView={activeView} onSelect={setActiveView} />
         </div>
       )}
 
-      {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
-      {!error && body === null && <p className="text-zinc-500">Loading…</p>}
-      {!error && body !== null && <Markdown source={body} />}
-
-      <Panel title="Used by">
-        {members.length > 0 ? (
-          <MemberList members={members} />
-        ) : (
-          <p className="text-sm text-zinc-400">Nothing embeds this fragment yet.</p>
+      <div className="mt-4">
+        {error && <p className="text-[13.5px] text-pink-ink">{error}</p>}
+        {!error && source === null && <p className="text-[13.5px] text-ink-subtle">Loading…</p>}
+        {!error && source !== null && resolved !== null && (
+          <Markdown source={activeView === "Source" ? source : resolved} />
         )}
-      </Panel>
+      </div>
+
+      <div className="mt-10">
+        <SectionHeader label="Used by" count={consumers.length} />
+        {consumers.length > 0 ? (
+          <div className="mt-1.5 flex flex-col">
+            {consumers.map((consumer) => (
+              <TemplateRow
+                key={`${consumer.kind}-${consumer.name}`}
+                kind={consumer.kind}
+                name={consumer.name}
+                description={consumer.description}
+                to={consumer.to}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 text-[13.5px] text-ink-subtle">Nothing embeds this fragment yet.</p>
+        )}
+      </div>
+
+      <div className="mt-10">
+        <PackChips packs={packsShippingFragment(manifest, entry.id)} />
+      </div>
     </div>
   )
 }

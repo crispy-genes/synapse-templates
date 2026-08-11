@@ -18,10 +18,14 @@ export function ManifestProvider({ children }: ManifestProviderProps) {
   }, [])
 
   if (error) {
-    return <p className="text-red-600 dark:text-red-400">Could not load the catalog manifest: {error}</p>
+    return (
+      <p className="p-11 text-[13.5px] text-pink-ink">
+        Could not load the catalog manifest: {error}
+      </p>
+    )
   }
   if (!manifest) {
-    return <p className="text-zinc-500">Loading catalog…</p>
+    return <p className="p-11 text-[13.5px] text-ink-subtle">Loading catalog…</p>
   }
   return <ManifestContext.Provider value={manifest}>{children}</ManifestContext.Provider>
 }

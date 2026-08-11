@@ -1,23 +1,42 @@
 import { Link } from "react-router-dom"
-import type { BadgeType } from "../types/badge"
-import { Badge } from "./Badge"
+import type { CatalogKind } from "../types/kind"
+import { KindBadge } from "./KindBadge"
+import { TagPill } from "./TagPill"
 
 interface DetailHeaderProps {
-  type: BadgeType
+  kind: CatalogKind
   name: string
   description: string
+  tags?: string[]
+  plainTags?: string[]
 }
 
-export function DetailHeader({ type, name, description }: DetailHeaderProps) {
+export function DetailHeader({ kind, name, description, tags = [], plainTags = [] }: DetailHeaderProps) {
   return (
-    <div className="mb-4">
-      <Link to="/" className="text-sm text-brand-600 hover:underline dark:text-brand-400">
-        ← catalog
+    <div>
+      <Link
+        to="/"
+        className="text-[13px] text-ink-subtle! no-underline transition-colors hover:text-pink-ink!"
+      >
+        ← All templates
       </Link>
-      <h1 className="mt-2 mb-1 flex items-center gap-3 text-2xl font-bold">
-        {name} <Badge type={type} />
-      </h1>
-      <p className="text-zinc-500 dark:text-zinc-400">{description}</p>
+      <div className="mt-6 flex items-center gap-3.5">
+        <h1 className="font-mono text-[26px] font-medium tracking-[-0.02em] text-ink">{name}</h1>
+        <KindBadge kind={kind} hasIcon />
+      </div>
+      <p className="mt-3.5 max-w-[640px] text-[15.5px] leading-relaxed text-ink-muted">
+        {description}
+      </p>
+      {(tags.length > 0 || plainTags.length > 0) && (
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <TagPill key={tag} tag={tag} isLink />
+          ))}
+          {plainTags.map((tag) => (
+            <TagPill key={tag} tag={tag} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

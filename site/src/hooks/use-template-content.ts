@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react"
 import type { FragmentEntry } from "../types/fragment"
-import type { TemplateEntry } from "../types/template"
 import { fetchText } from "../lib/files"
 import { extractBody } from "../lib/markdown"
 import { closureIds, inlineEmbeds, loadFragmentBodies } from "../lib/resolve"
+
+interface ContentSource {
+  path: string
+  usesFragments?: string[]
+}
 
 interface TemplateContent {
   source: string | null
@@ -12,7 +16,7 @@ interface TemplateContent {
 }
 
 export function useTemplateContent(
-  entry: TemplateEntry | undefined,
+  entry: ContentSource | undefined,
   fragments: FragmentEntry[]
 ): TemplateContent {
   const [source, setSource] = useState<string | null>(null)

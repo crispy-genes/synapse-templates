@@ -6,10 +6,10 @@ interface NotFoundProps {
 
 export function NotFound({ what }: NotFoundProps) {
   return (
-    <div>
-      <p className="text-red-600 dark:text-red-400">Not found: {what}.</p>
-      <Link to="/" className="text-brand-600 hover:underline dark:text-brand-400">
-        ← back to catalog
+    <div className="flex flex-col items-start gap-3">
+      <p className="font-mono text-[13.5px] text-ink-muted">Not found: {what}.</p>
+      <Link to="/" className="text-[13.5px] no-underline">
+        ← All templates
       </Link>
     </div>
   )

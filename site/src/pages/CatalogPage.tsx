@@ -1,82 +1,114 @@
-import { useState } from "react"
-import { TEMPLATE_TYPES } from "../constants/registry"
-import type { TemplateType } from "../types/template"
-import { allTags } from "../lib/catalog"
+import { CATALOG_KINDS, KIND_LABELS } from "../constants/registry"
+import type { CatalogItem } from "../types/catalog-item"
+import type { CatalogKind } from "../types/kind"
+import { installCommand, matchesFilters } from "../lib/catalog"
+import { useCatalogFilters } from "../hooks/use-catalog-filters"
+import { useCatalogItems } from "../hooks/use-catalog-items"
 import { useManifest } from "../hooks/use-manifest"
-import { CatalogCard } from "../components/CatalogCard"
 import { CatalogSection } from "../components/CatalogSection"
-import { TagFilter } from "../components/TagFilter"
+import { PackCard } from "../components/PackCard"
+import { TemplateRow } from "../components/TemplateRow"
+
+const PACK_CAP = 6
+const ROW_CAP = 8
+
+const SECTION_HINTS: Record<CatalogKind, string> = {
+  pack: "One command installs the whole set",
+  agent: "Full personas with tools and scope",
+  skill: "Single procedures an agent can invoke",
+  rule: "Always-on conventions and constraints",
+  fragment: "Snippets embedded into any file",
+}
 
 export function CatalogPage() {
   const manifest = useManifest()
-  const [activeTags, setActiveTags] = useState<Set<string>>(new Set())
+  const items = useCatalogItems()
+  const { filters, setType, clearFilters } = useCatalogFilters()
 
-  function toggleTag(tag: string) {
-    const next = new Set(activeTags)
-    next.has(tag) ? next.delete(tag) : next.add(tag)
-    setActiveTags(next)
+  const matching = items.filter((item) => matchesFilters(item, filters.q, filters.tag))
+  const ofKind = (kind: CatalogKind) => matching.filter((item) => item.kind === kind)
+
+  const hasActiveFilter = filters.q !== "" || filters.type !== null || filters.tag !== null
+  const isCapped = !hasActiveFilter
+  const visibleKinds = filters.type ? [filters.type] : [...CATALOG_KINDS]
+  const totalVisible = visibleKinds.reduce((sum, kind) => sum + ofKind(kind).length, 0)
+
+  const packsByName = new Map(manifest.packs.map((pack) => [pack.name, pack]))
+
+  function sectionProps(kind: CatalogKind, kindItems: CatalogItem[], cap: number) {
+    const isTruncated = isCapped && kindItems.length > cap
+    return {
+      label: KIND_LABELS[kind],
+      count: kindItems.length,
+      hint: SECTION_HINTS[kind],
+      showAllLabel: isTruncated
+        ? `Show all ${kindItems.length} ${KIND_LABELS[kind].toLowerCase()}`
+        : undefined,
+      onShowAll: isTruncated ? () => setType(kind) : undefined,
+    }
   }
-
-  const matches = (tags: string[]) =>
-    activeTags.size === 0 || tags.some((tag) => activeTags.has(tag))
-
-  const packs = manifest.packs.filter((pack) => matches(pack.tags))
-  const templatesOfType = (type: TemplateType) =>
-    manifest.templates.filter((t) => t.type === type && matches(t.tags))
-  const fragments = activeTags.size === 0 ? manifest.fragments : []
 
   return (
     <div>
-      <div className="mt-2">
-        <TagFilter tags={allTags(manifest)} activeTags={activeTags} onToggle={toggleTag} />
-      </div>
+      {!hasActiveFilter && (
+        <div className="max-w-[620px]">
+          <h1 className="text-[29px] font-semibold leading-tight tracking-[-0.025em] text-ink">
+            Drop-in markdown for coding agents.
+          </h1>
+          <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
+            Agents, skills, and rules you install with one command. Fragments keep the shared
+            parts in a single file, and packs bundle what belongs together.
+          </p>
+        </div>
+      )}
 
-      <CatalogSection title="Packs" count={packs.length}>
-        {packs.map((pack) => (
-          <CatalogCard
-            key={pack.name}
-            to={`/pack/${pack.name}`}
-            name={pack.name}
-            type="pack"
-            description={pack.description}
-            tags={pack.tags}
-          />
-        ))}
-      </CatalogSection>
-
-      {TEMPLATE_TYPES.map((type) => {
-        const templates = templatesOfType(type)
-        return (
-          <CatalogSection
-            key={type}
-            title={`${type[0].toUpperCase()}${type.slice(1)}s`}
-            count={templates.length}
+      {totalVisible === 0 && (
+        <div className="mt-16 flex flex-col items-start gap-3">
+          <p className="font-mono text-[13.5px] text-ink-muted">No templates match that filter.</p>
+          <button
+            onClick={clearFilters}
+            className="text-[13.5px] text-pink-ink transition-colors hover:text-pink"
           >
-            {templates.map((template) => (
-              <CatalogCard
-                key={template.name}
-                to={`/${template.type}/${template.name}`}
-                name={template.name}
-                type={template.type}
-                description={template.description}
-                tags={template.tags}
-              />
-            ))}
+            Reset
+          </button>
+        </div>
+      )}
+
+      {visibleKinds.map((kind) => {
+        const kindItems = ofKind(kind)
+        const cap = kind === "pack" ? PACK_CAP : ROW_CAP
+        const visibleItems = isCapped ? kindItems.slice(0, cap) : kindItems
+
+        if (kind === "pack") {
+          return (
+            <CatalogSection key={kind} {...sectionProps(kind, kindItems, cap)}>
+              <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(292px,1fr))] gap-3.5">
+                {visibleItems.map((item) => (
+                  <PackCard key={item.name} pack={packsByName.get(item.name)!} />
+                ))}
+              </div>
+            </CatalogSection>
+          )
+        }
+
+        return (
+          <CatalogSection key={kind} {...sectionProps(kind, kindItems, cap)}>
+            <div className="mt-1.5 flex flex-col">
+              {visibleItems.map((item) => (
+                <TemplateRow
+                  key={item.name}
+                  kind={item.kind}
+                  name={item.name}
+                  description={item.description}
+                  to={item.route}
+                  tags={item.tags}
+                  copyCommand={installCommand(item.kind, item.name)}
+                />
+              ))}
+            </div>
           </CatalogSection>
         )
       })}
-
-      <CatalogSection title="Fragments" count={fragments.length}>
-        {fragments.map((fragment) => (
-          <CatalogCard
-            key={fragment.id}
-            to={`/fragment/${fragment.id}`}
-            name={fragment.id}
-            type="fragment"
-            description={fragment.description}
-          />
-        ))}
-      </CatalogSection>
     </div>
   )
 }

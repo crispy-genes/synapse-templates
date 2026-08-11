@@ -6,15 +6,15 @@ interface ViewToggleProps<T extends string> {
 
 export function ViewToggle<T extends string>({ views, activeView, onSelect }: ViewToggleProps<T>) {
   return (
-    <div className="my-3 inline-flex overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
+    <div className="inline-flex gap-0.5 rounded-lg bg-divider p-0.5">
       {views.map((view) => (
         <button
           key={view}
           onClick={() => onSelect(view)}
-          className={`px-4 py-1.5 text-sm ${
+          className={`rounded-md px-3.5 py-1 text-[12.5px] transition-colors ${
             view === activeView
-              ? "bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300"
-              : "bg-white text-zinc-500 hover:text-zinc-800 dark:bg-zinc-900 dark:hover:text-zinc-200"
+              ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgba(20,19,26,0.07),0_0_0_1px_rgba(20,19,26,0.04)]"
+              : "text-ink-muted hover:text-ink"
           }`}
         >
           {view}

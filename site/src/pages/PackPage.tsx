@@ -1,13 +1,12 @@
 import { useParams } from "react-router-dom"
-import type { Member } from "../types/member"
-import { installCommand } from "../lib/catalog"
+import { TEMPLATE_TYPES } from "../constants/registry"
+import { installCommand, itemRoute } from "../lib/catalog"
 import { useManifest } from "../hooks/use-manifest"
 import { DetailHeader } from "../components/DetailHeader"
 import { InstallCommand } from "../components/InstallCommand"
-import { MemberList } from "../components/MemberList"
 import { NotFound } from "../components/NotFound"
-import { Panel } from "../components/Panel"
-import { TagPill } from "../components/TagPill"
+import { SectionHeader } from "../components/SectionHeader"
+import { TemplateRow } from "../components/TemplateRow"
 
 export function PackPage() {
   const manifest = useManifest()
@@ -16,27 +15,47 @@ export function PackPage() {
 
   if (!entry) return <NotFound what={`pack "${name}"`} />
 
-  const members: Member[] = [
-    ...entry.agents.map((n) => ({ type: "agent" as const, name: n, to: `/agent/${n}` })),
-    ...entry.rules.map((n) => ({ type: "rule" as const, name: n, to: `/rule/${n}` })),
-    ...entry.skills.map((n) => ({ type: "skill" as const, name: n, to: `/skill/${n}` })),
-    ...entry.hooks.map((n) => ({ type: "pack" as const, name: n, note: "(hook — bundled in the CLI)" })),
-  ]
+  const members = TEMPLATE_TYPES.flatMap((type) =>
+    entry[`${type}s`].map((memberName) => {
+      const template = manifest.templates.find((t) => t.type === type && t.name === memberName)
+      return { type, name: memberName, description: template?.description ?? "" }
+    })
+  )
+  const includesCount = members.length + entry.hooks.length
 
   return (
     <div>
-      <DetailHeader type="pack" name={entry.name} description={entry.description} />
-      <div className="mb-2 flex flex-wrap gap-1.5">
-        {entry.tags.map((tag) => (
-          <TagPill key={tag} tag={tag} />
-        ))}
+      <DetailHeader kind="pack" name={entry.name} description={entry.description} tags={entry.tags} />
+
+      <div className="mt-7">
+        <InstallCommand command={installCommand("pack", entry.name)} />
       </div>
 
-      <InstallCommand command={installCommand("pack", entry.name)} />
-
-      <Panel title="Includes">
-        <MemberList members={members} />
-      </Panel>
+      <div className="mt-10">
+        <SectionHeader label="Includes" count={includesCount} />
+        <div className="mt-1.5 flex flex-col">
+          {members.map((member) => (
+            <TemplateRow
+              key={`${member.type}-${member.name}`}
+              kind={member.type}
+              name={member.name}
+              description={member.description}
+              to={itemRoute(member.type, member.name)}
+            />
+          ))}
+          {entry.hooks.map((hook) => (
+            <div
+              key={hook}
+              className="flex items-center gap-3.5 border-b border-divider px-2.5 py-[11px]"
+            >
+              <span className="w-[210px] shrink-0 truncate font-mono text-[13.5px] text-ink">
+                {hook}
+              </span>
+              <span className="text-[13.5px] text-ink-subtle">hook — bundled in the CLI</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
