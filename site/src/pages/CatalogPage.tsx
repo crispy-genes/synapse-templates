@@ -52,7 +52,7 @@ export function CatalogPage() {
     <div>
       {!hasActiveFilter && (
         <div className="max-w-[620px]">
-          <h1 className="text-[29px] font-semibold leading-tight tracking-[-0.025em] text-ink">
+          <h1 className="text-[24px] font-semibold leading-tight tracking-[-0.025em] text-ink sm:text-[29px]">
             Drop-in markdown for coding agents.
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
@@ -82,7 +82,7 @@ export function CatalogPage() {
         if (kind === "pack") {
           return (
             <CatalogSection key={kind} {...sectionProps(kind, kindItems, cap)}>
-              <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(292px,1fr))] gap-3.5">
+              <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(min(292px,100%),1fr))] gap-3.5">
                 {visibleItems.map((item) => (
                   <PackCard key={item.name} pack={packsByName.get(item.name)!} />
                 ))}

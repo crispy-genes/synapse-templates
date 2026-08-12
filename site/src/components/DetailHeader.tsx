@@ -20,8 +20,10 @@ export function DetailHeader({ kind, name, description, tags = [], plainTags = [
       >
         ← All templates
       </Link>
-      <div className="mt-6 flex items-center gap-3.5">
-        <h1 className="font-mono text-[26px] font-medium tracking-[-0.02em] text-ink">{name}</h1>
+      <div className="mt-6 flex flex-wrap items-center gap-x-3.5 gap-y-2">
+        <h1 className="break-all font-mono text-[22px] font-medium tracking-[-0.02em] text-ink sm:text-[26px]">
+          {name}
+        </h1>
         <KindBadge kind={kind} hasIcon />
       </div>
       <p className="mt-3.5 max-w-[640px] text-[15.5px] leading-relaxed text-ink-muted">
