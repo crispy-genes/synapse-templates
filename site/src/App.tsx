@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { HashRouter, Route, Routes } from "react-router-dom"
 import { LegacyRedirect } from "./components/LegacyRedirect"
 import { ManifestProvider } from "./components/ManifestProvider"
@@ -11,15 +12,20 @@ import { PackPage } from "./pages/PackPage"
 import { TemplatePage } from "./pages/TemplatePage"
 
 export function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
   return (
     <HashRouter>
       <ScrollReset />
-      <SiteHeader />
+      <SiteHeader
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen((isOpen) => !isOpen)}
+      />
       <ManifestProvider>
         <div className="flex items-start">
-          <Sidebar />
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
           <main className="min-w-0 flex-1">
-            <div className="mx-auto max-w-[1120px] px-11 pb-[90px] pt-[34px]">
+            <div className="mx-auto max-w-[1120px] px-5 pb-16 pt-7 sm:px-8 md:pb-[90px] md:pt-[34px] lg:px-11">
               <Routes>
                 <Route path="/" element={<CatalogPage />} />
                 <Route path="/packs/:name" element={<PackPage />} />

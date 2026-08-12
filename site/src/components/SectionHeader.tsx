@@ -11,7 +11,7 @@ export function SectionHeader({ label, count, hint }: SectionHeaderProps) {
         {label}
       </h2>
       <span className="font-mono text-[12px] text-ink-faint">{count}</span>
-      {hint && <span className="ml-auto text-[12.5px] text-ink-subtle">{hint}</span>}
+      {hint && <span className="ml-auto hidden text-[12.5px] text-ink-subtle sm:inline">{hint}</span>}
     </div>
   )
 }

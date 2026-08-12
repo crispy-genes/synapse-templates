@@ -46,9 +46,9 @@ export function PackPage() {
           {entry.hooks.map((hook) => (
             <div
               key={hook}
-              className="flex items-center gap-3.5 border-b border-divider px-2.5 py-[11px]"
+              className="flex flex-col gap-0.5 border-b border-divider px-2.5 py-[11px] sm:flex-row sm:items-center sm:gap-3.5"
             >
-              <span className="w-[210px] shrink-0 truncate font-mono text-[13.5px] text-ink">
+              <span className="truncate font-mono text-[13.5px] text-ink sm:w-[210px] sm:shrink-0">
                 {hook}
               </span>
               <span className="text-[13.5px] text-ink-subtle">hook — bundled in the CLI</span>
