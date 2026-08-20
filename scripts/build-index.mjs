@@ -18,6 +18,13 @@ const FOLDER_TO_TYPE = {
   talismans: "talisman",
 }
 
+const HOOK_EVENTS = [
+  "SessionStart", "SessionEnd", "UserPromptSubmit", "PreToolUse", "PostToolUse", "PostToolUseFailure",
+  "PermissionRequest", "Notification", "SubagentStart", "SubagentStop", "Stop", "StopFailure",
+  "PreCompact", "PostCompact", "ConfigChange", "InstructionsLoaded", "TaskCompleted",
+  "WorktreeCreate", "WorktreeRemove", "Elicitation", "ElicitationResult",
+]
+
 const FRAGMENTS_FOLDER = "fragments"
 const FRAGMENT_KINDS = ["convention", "template"]
 const PACKS_FOLDER = "packs"
@@ -83,6 +90,38 @@ function extractBody(content) {
     if (end !== -1) return content.slice(end + 4)
   }
   return content
+}
+
+function hookFields(fields, content, relPath) {
+  const hook = {}
+  if (!HOOK_EVENTS.includes(fields.event)) {
+    errors.push(
+      `${relPath}: hook "event" is missing or unknown (got ${JSON.stringify(fields.event)}; expected one of ${HOOK_EVENTS.join(", ")})`
+    )
+  } else {
+    hook.event = fields.event
+  }
+  if (fields.matcher !== undefined && fields.matcher !== "") hook.matcher = fields.matcher
+  if (fields.async !== undefined) {
+    if (fields.async !== "true" && fields.async !== "false") {
+      errors.push(`${relPath}: hook "async" must be true or false`)
+    } else if (fields.async === "true") {
+      hook.async = true
+    }
+  }
+  if (fields.timeout !== undefined) {
+    const timeout = Number(fields.timeout)
+    if (!Number.isInteger(timeout) || timeout <= 0) {
+      errors.push(`${relPath}: hook "timeout" must be a positive integer (seconds)`)
+    } else {
+      hook.timeout = timeout
+    }
+  }
+  const script = extractBody(content).match(/^```[^\n]*\n([\s\S]*?)\n```/m)
+  if (!script || !script[1].trim()) {
+    errors.push(`${relPath}: hook body must contain the script in a fenced code block`)
+  }
+  return hook
 }
 
 function extractEmbeds(content) {
@@ -205,6 +244,7 @@ for (const folder of readdirSync(TEMPLATES_DIR).sort()) {
     }
     const usesFragments = extractEmbeds(content)
     if (usesFragments.length > 0) entry.usesFragments = usesFragments
+    if (type === "hook") Object.assign(entry, hookFields(fields, content, relPath))
     entries.push(entry)
   }
 }
@@ -243,6 +283,7 @@ for (const pack of packs) {
     ["agents", "agent"],
     ["skills", "skill"],
     ["rules", "rule"],
+    ["hooks", "hook"],
   ]) {
     if (!Array.isArray(pack[field])) {
       errors.push(`${pack.path}: "${field}" must be a block list`)
@@ -254,10 +295,6 @@ for (const pack of packs) {
         errors.push(`${pack.path}: references unknown ${type} "${name}"`)
       }
     }
-  }
-  if (!Array.isArray(pack.hooks)) {
-    errors.push(`${pack.path}: "hooks" must be a block list`)
-    pack.hooks = []
   }
 }
 

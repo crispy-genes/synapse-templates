@@ -9,6 +9,7 @@ templates/
 ├── agents/       # Subagent definitions
 ├── rules/        # Project rule documents
 ├── skills/       # Skill / slash-command definitions
+├── hooks/        # Hook scripts bound to Claude Code events
 ├── fragments/    # Reusable content blocks embedded by templates
 └── packs/        # Named bundles of agents + skills + rules + hooks
 v1/
@@ -64,6 +65,32 @@ kind: convention                   # optional: convention | template
 Embeds inside code fences or inline code spans are ignored. The build fails on
 embeds of unknown fragment ids and on transclusion cycles between fragments.
 
+## Hooks
+
+Hook templates under `templates/hooks/` bind a shell script to a Claude Code event.
+The binding lives in the frontmatter; the script is the **first fenced code block** in
+the body (prose before it is rendered in the catalog). Consumers install the script as
+`.claude/hooks/<name>.sh` and register a `command` handler in `.claude/settings.json`.
+
+```markdown
+---
+description: Flags docs drift after edits      # required
+tags: [docs, workflow]                         # optional
+event: Stop                                    # required — a Claude Code hook event
+matcher: Write|Edit                            # optional — tool-name regex for tool events
+async: true                                    # optional, default false
+timeout: 60                                    # optional seconds, default 60
+---
+What the hook does.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+cat >/dev/null   # consume the hook payload on stdin
+exit 0
+```
+```
+
 ## Packs
 
 Packs are named bundles under `templates/packs/`. The frontmatter lists the member
@@ -84,13 +111,13 @@ hooks:
 ---
 ```
 
-Every listed agent/skill/rule must exist in this repo (the build fails otherwise).
-Hooks are exempt — hook templates ship inside the synapse CLI.
+Every listed agent/skill/rule/hook must exist in this repo (the build fails otherwise).
 
 ## Manifest
 
 `v1/index.json` maps every template to `{ name, type, description, tags, path, sha256 }`,
 plus `usesFragments` (directly embedded fragment ids) when a template embeds fragments.
+Hook entries additionally carry `event` and, when set, `matcher`, `async`, `timeout`.
 Fragments appear in a top-level `fragments` array as
 `{ id, description, kind, path, sha256, usesFragments }`; packs in a top-level `packs`
 array as `{ name, description, tags, path, sha256, agents, skills, rules, hooks }`.
