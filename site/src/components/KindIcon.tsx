@@ -26,6 +26,13 @@ const ICON_PATHS: Record<CatalogKind | "all", ReactNode> = {
       <circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none" />
     </>
   ),
+  hook: (
+    <>
+      <circle cx="14" cy="4.75" r="1.75" />
+      <path d="M14 6.5v9a4.5 4.5 0 0 1-9 0v-1.5" />
+      <path d="m3 15.5 2-1.5 2 1.5" />
+    </>
+  ),
   fragment: <path d="m9 6.5-5.5 5.5L9 17.5M15 6.5l5.5 5.5-5.5 5.5" />,
   all: (
     <>

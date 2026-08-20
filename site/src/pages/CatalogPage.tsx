@@ -17,6 +17,7 @@ const SECTION_HINTS: Record<CatalogKind, string> = {
   agent: "Full personas with tools and scope",
   skill: "Single procedures an agent can invoke",
   rule: "Always-on conventions and constraints",
+  hook: "Scripts bound to Claude Code events",
   fragment: "Snippets embedded into any file",
 }
 
@@ -56,8 +57,8 @@ export function CatalogPage() {
             Drop-in markdown for coding agents.
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">
-            Agents, skills, and rules you install with one command. Fragments keep the shared
-            parts in a single file, and packs bundle what belongs together.
+            Agents, skills, rules, and hooks you install with one command. Fragments keep the
+            shared parts in a single file, and packs bundle what belongs together.
           </p>
         </div>
       )}
@@ -102,7 +103,7 @@ export function CatalogPage() {
                   description={item.description}
                   to={item.route}
                   tags={item.tags}
-                  copyCommand={installCommand(item.kind, item.name)}
+                  copyCommand={item.kind === "hook" ? undefined : installCommand(item.kind, item.name)}
                 />
               ))}
             </div>
