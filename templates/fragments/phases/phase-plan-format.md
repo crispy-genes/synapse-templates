@@ -3,7 +3,7 @@ id: phase-plan-format
 description: The plan file and PHASES.md index formats a phase plan emits
 kind: template
 ---
-Write phase plans to `<project-root>/.synapse/phases/{slug}.md`:
+Write phase plans to `<project-root>/.claude/phases/{slug}.md`:
 
 ````markdown
 ---
@@ -33,7 +33,7 @@ total_phases: {N}
 <!-- filled in when phase completes — this is the cross-session bridge -->
 ````
 
-After creating or updating a plan, update `<project-root>/.synapse/phases/PHASES.md`:
+After creating or updating a plan, update `<project-root>/.claude/phases/PHASES.md`:
 
 ````markdown
 # Active Plans
