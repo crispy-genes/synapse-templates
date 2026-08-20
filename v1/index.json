@@ -63,6 +63,19 @@
       "timeout": 60
     },
     {
+      "name": "phases-status",
+      "type": "hook",
+      "description": "Print the active phase-plan index at the start of every session",
+      "tags": [
+        "workflow",
+        "planning"
+      ],
+      "path": "templates/hooks/phases-status.md",
+      "sha256": "b9d4f844ef80e8fbb9f5f076520f4c3e9dbe0221f340728440a56c39df622bad",
+      "event": "SessionStart",
+      "timeout": 10
+    },
+    {
       "name": "api-conventions",
       "type": "rule",
       "description": "Conventions for API route handlers and endpoint design",
@@ -134,7 +147,7 @@
       "description": "Evaluates incoming requests and decomposes all new features into phased PRs with cross-session context",
       "tags": [],
       "path": "templates/rules/phase-planning.md",
-      "sha256": "bafd09b325e619d3d1f3e470f5b37a20c7fc1c33596b5222bdff435aa8b6c03b",
+      "sha256": "a591afa910b41dd53c2c330503faafd30a02d897644edfd1a10968090f36909d",
       "usesFragments": [
         "phase-criteria",
         "phase-requirements",
@@ -270,10 +283,10 @@
     {
       "name": "phase-plan",
       "type": "skill",
-      "description": "Evaluate a feature request and create a phased implementation plan for manageable PRs with cross-session context. Use for ANY new feature request (every feature gets a plan regardless of size), when a session starts with active entries in .synapse/phases/PHASES.md, or to check progress on a phased feature. Do not use for refactors, cleanups, renames, bug fixes, documentation-only changes, or when the user explicitly wants everything in one PR.",
+      "description": "Evaluate a feature request and create a phased implementation plan for manageable PRs with cross-session context. Use for ANY new feature request (every feature gets a plan regardless of size), when a session starts with active entries in .claude/phases/PHASES.md, or to check progress on a phased feature. Do not use for refactors, cleanups, renames, bug fixes, documentation-only changes, or when the user explicitly wants everything in one PR.",
       "tags": [],
       "path": "templates/skills/phase-plan.md",
-      "sha256": "684086505df1d79ba79e2c21891bd3891aae14f6f092bfb735fa62b451c7f339",
+      "sha256": "63ae3bda4241b73f89cfcf83370912f13d68df443703dc81d8e20eab97dd3aee",
       "usesFragments": [
         "phase-criteria",
         "phase-requirements",
@@ -417,7 +430,7 @@
       "id": "phase-plan-format",
       "description": "The plan file and PHASES.md index formats a phase plan emits",
       "path": "templates/fragments/phases/phase-plan-format.md",
-      "sha256": "ede7fc67d2b2f4b014f27a48a6de7b444c3d3897f4900a6f9a4966775f8048bf",
+      "sha256": "6e59f5fee6290e6ed32c8277aacdf8456d94105bb366ba2c9940815f520a0708",
       "kind": "template"
     },
     {
@@ -667,7 +680,7 @@
         "planning"
       ],
       "path": "templates/packs/phases.md",
-      "sha256": "42e52621f5a41dd994d4c2042b2e2d0147a998cd3f3a9b68b2c173474970afa0",
+      "sha256": "23ae3b89e913af8a01f7052a38306d7d8bc47d69181712ebbf1a06e8e4556525",
       "agents": [],
       "skills": [
         "phase-plan"
@@ -675,7 +688,9 @@
       "rules": [
         "phase-planning"
       ],
-      "hooks": []
+      "hooks": [
+        "phases-status"
+      ]
     },
     {
       "name": "react",

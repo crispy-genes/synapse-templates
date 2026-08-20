@@ -7,6 +7,14 @@ provides:
 uses:
   - phase-plan-format
 ---
+## Phase enforcement
+
+**CRITICAL**: For any new feature that meets the criteria below:
+- You MUST create a phase plan file under `.claude/phases/` BEFORE writing code.
+- Implement ONLY ONE phase per session/PR — stop after completing a phase and wait for review.
+- Do NOT use the built-in plan mode as a substitute for the phasing system.
+- Do NOT implement multiple phases in a single session, even if the plan covers all phases.
+
 ## When to phase
 
 ![[phase-criteria]]
@@ -15,10 +23,10 @@ Even a small feature gets a plan — the plan still provides the tracking, branc
 
 ## How to phase
 
-All `.synapse/` paths are relative to the project root (the directory containing `.git/`). Never create `.synapse/` at the filesystem root or home directory.
+All `.claude/phases/` paths are relative to the project root (the directory containing `.git/`). Never create `.claude/phases/` at the filesystem root or home directory. Create the directory if it does not exist yet.
 
 1. Before writing any code, analyze the request and determine if phasing applies.
-2. If it does, create a phase plan file in `<project-root>/.synapse/phases/` and update `<project-root>/.synapse/phases/PHASES.md`.
+2. If it does, create a phase plan file in `<project-root>/.claude/phases/` and update `<project-root>/.claude/phases/PHASES.md`.
 3. Write a context handoff in each phase — what the next session needs to know.
 
 ![[phase-requirements]]
@@ -39,4 +47,4 @@ Pick the order based on dependencies between features, or if independent, by com
 
 ## Resuming a phase
 
-When starting a new session, check `<project-root>/.synapse/phases/PHASES.md` for active plans. If one exists, read the full plan file and the context handoff from the previous phase before beginning work. Do not ask the user to re-explain — the plan has the context.
+When starting a new session, check `<project-root>/.claude/phases/PHASES.md` for active plans. If one exists, read the full plan file and the context handoff from the previous phase before beginning work. Do not ask the user to re-explain — the plan has the context.
