@@ -21,7 +21,7 @@ export function PackPage() {
       return { type, name: memberName, description: template?.description ?? "" }
     })
   )
-  const includesCount = members.length + entry.hooks.length
+  const includesCount = members.length
 
   return (
     <div>
@@ -42,17 +42,6 @@ export function PackPage() {
               description={member.description}
               to={itemRoute(member.type, member.name)}
             />
-          ))}
-          {entry.hooks.map((hook) => (
-            <div
-              key={hook}
-              className="flex flex-col gap-0.5 border-b border-divider px-2.5 py-[11px] sm:flex-row sm:items-center sm:gap-3.5"
-            >
-              <span className="truncate font-mono text-[13.5px] text-ink sm:w-[210px] sm:shrink-0">
-                {hook}
-              </span>
-              <span className="text-[13.5px] text-ink-subtle">hook — bundled in the CLI</span>
-            </div>
           ))}
         </div>
       </div>

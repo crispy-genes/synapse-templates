@@ -3,7 +3,7 @@ import type { CatalogItem } from "../types/catalog-item"
 import type { CatalogKind } from "../types/kind"
 import type { Manifest } from "../types/manifest"
 import type { PackEntry } from "../types/pack"
-import type { TemplateType } from "../types/template"
+import type { TemplateEntry, TemplateType } from "../types/template"
 import type { UsedBy } from "../types/used-by"
 import { closureIds } from "./resolve"
 
@@ -76,6 +76,15 @@ export function packComposition(pack: PackEntry): string {
     .filter(([count]) => count > 0)
     .map(([count, label]) => `${count} ${label}${count === 1 ? "" : "s"}`)
     .join(" · ")
+}
+
+export function hookBinding(entry: TemplateEntry): Array<[string, string]> {
+  if (entry.type !== "hook" || !entry.event) return []
+  const binding: Array<[string, string]> = [["event", entry.event]]
+  if (entry.matcher) binding.push(["matcher", entry.matcher])
+  binding.push(["async", entry.async ? "yes" : "no"])
+  binding.push(["timeout", `${entry.timeout ?? 60}s`])
+  return binding
 }
 
 export function packsContaining(manifest: Manifest, type: TemplateType, name: string): PackEntry[] {

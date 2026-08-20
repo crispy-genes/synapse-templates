@@ -32,11 +32,13 @@ export function App() {
                 <Route path="/agents/:name" element={<TemplatePage type="agent" />} />
                 <Route path="/skills/:name" element={<TemplatePage type="skill" />} />
                 <Route path="/rules/:name" element={<TemplatePage type="rule" />} />
+                <Route path="/hooks/:name" element={<TemplatePage type="hook" />} />
                 <Route path="/fragments/:id" element={<FragmentPage />} />
                 <Route path="/pack/:name" element={<LegacyRedirect segment="packs" />} />
                 <Route path="/agent/:name" element={<LegacyRedirect segment="agents" />} />
                 <Route path="/skill/:name" element={<LegacyRedirect segment="skills" />} />
                 <Route path="/rule/:name" element={<LegacyRedirect segment="rules" />} />
+                <Route path="/hook/:name" element={<LegacyRedirect segment="hooks" />} />
                 <Route path="/fragment/:name" element={<LegacyRedirect segment="fragments" />} />
                 <Route path="*" element={<NotFound what="this page" />} />
               </Routes>
