@@ -49,6 +49,20 @@
       ]
     },
     {
+      "name": "docs-drift",
+      "type": "hook",
+      "description": "Flags docs drift when the public surface changes but docs do not",
+      "tags": [
+        "docs",
+        "workflow"
+      ],
+      "path": "templates/hooks/docs-drift.md",
+      "sha256": "5e724c41eb5ed001a05fa8a886174f4700563d99419c4f7755d0b6ff17f226a6",
+      "event": "Stop",
+      "async": true,
+      "timeout": 60
+    },
+    {
       "name": "api-conventions",
       "type": "rule",
       "description": "Conventions for API route handlers and endpoint design",
