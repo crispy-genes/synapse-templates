@@ -92,6 +92,30 @@ function extractBody(content) {
   return content
 }
 
+const REQUIRED_SKILL_SECTIONS = ["## Steps", "## Assumptions to verify"]
+
+const DESCRIPTION_TRIGGER = /\buse (?:this skill )?(?:when|for|to)\b/i
+const DESCRIPTION_ANTI_TRIGGER = /\b(?:do not use|don't use|never use|not for)\b/i
+
+function checkSkill(fields, content, relPath) {
+  const body = extractBody(content)
+  const missing = REQUIRED_SKILL_SECTIONS.filter((heading) => !body.includes(heading))
+  if (missing.length > 0) {
+    errors.push(`${relPath}: skill is missing required section(s): ${missing.join(", ")}`)
+  }
+
+  const description = fields.description ?? ""
+  if (!description) return
+  const exclusion = description.match(DESCRIPTION_ANTI_TRIGGER)
+  const beforeExclusion = exclusion ? description.slice(0, exclusion.index) : description
+  if (!DESCRIPTION_TRIGGER.test(beforeExclusion)) {
+    errors.push(`${relPath}: skill description has no trigger clause (add "Use when …")`)
+  }
+  if (!exclusion) {
+    errors.push(`${relPath}: skill description has no exclusion clause (add "Do not use for …")`)
+  }
+}
+
 function hookFields(fields, content, relPath) {
   const hook = {}
   if (!HOOK_EVENTS.includes(fields.event)) {
@@ -245,6 +269,7 @@ for (const folder of readdirSync(TEMPLATES_DIR).sort()) {
     const usesFragments = extractEmbeds(content)
     if (usesFragments.length > 0) entry.usesFragments = usesFragments
     if (type === "hook") Object.assign(entry, hookFields(fields, content, relPath))
+    if (type === "skill") checkSkill(fields, content, relPath)
     entries.push(entry)
   }
 }

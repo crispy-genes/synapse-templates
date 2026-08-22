@@ -2,11 +2,10 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { TEMPLATE_VIEWS } from "../constants/views"
 import type { TemplateView } from "../types/view"
-import { installCommand, itemRoute, packsShippingFragment, usedBy } from "../lib/catalog"
+import { itemRoute, packsShippingFragment, usedBy } from "../lib/catalog"
 import { useManifest } from "../hooks/use-manifest"
 import { useTemplateContent } from "../hooks/use-template-content"
 import { DetailHeader } from "../components/DetailHeader"
-import { InstallCommand } from "../components/InstallCommand"
 import { Markdown } from "../components/Markdown"
 import { NotFound } from "../components/NotFound"
 import { PackChips } from "../components/PackChips"
@@ -51,7 +50,11 @@ export function FragmentPage() {
       />
 
       <div className="mt-7">
-        <InstallCommand command={installCommand("fragment", entry.id)} />
+        <p className="text-[13.5px] text-ink-muted">
+          Fragments have no standalone install — they are inlined into the agents, skills, and
+          rules that embed them, so installing one of those brings this text with it.
+          {consumers.length === 0 && " Nothing embeds this fragment yet."}
+        </p>
       </div>
 
       {hasEmbeds && (

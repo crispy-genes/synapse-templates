@@ -15,7 +15,7 @@ uses:
 6. Export all client functions.
 7. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

@@ -13,7 +13,7 @@ uses:
 5. Re-run the check to confirm all errors are resolved.
 6. Verify: zero type errors reported.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the project to confirm — do not assume:
 

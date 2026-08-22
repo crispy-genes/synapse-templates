@@ -15,7 +15,7 @@ uses:
 6. If the page needs data, set up data fetching with the project's established approach (loader, React Query, useEffect, etc.).
 7. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

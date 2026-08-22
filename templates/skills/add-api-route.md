@@ -17,7 +17,7 @@ uses:
 6. Register the route in the main router/app entry point.
 7. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

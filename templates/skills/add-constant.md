@@ -14,7 +14,7 @@ uses:
 4. Export the constant (named export) and update any barrel exports the project uses.
 5. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

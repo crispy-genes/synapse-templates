@@ -15,7 +15,7 @@ uses:
 5. If this schema relates to an API endpoint, use it in the route's request validation.
 6. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

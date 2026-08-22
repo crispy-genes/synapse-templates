@@ -176,7 +176,7 @@
       "description": "Create typed API client functions for calling backend endpoints from frontend code using the project's HTTP client. Use when the user needs frontend functions to call backend endpoints or a typed API client module for a resource. Do not use for backend route creation (use add-api-route), React hooks wrapping the client (use add-crud-hook), or server-to-server calls.",
       "tags": [],
       "path": "templates/skills/add-api-client-route.md",
-      "sha256": "cd248d9dc043ae388ed560a7a0d0c7c7e05ed5ba810ff35cbabbcf106bb20f3d",
+      "sha256": "5a22d7a2683fc21ffa176163605d3774d6bef59b5acb7ee044f436bb4607c14a",
       "usesFragments": [
         "existing-patterns-first"
       ]
@@ -187,7 +187,7 @@
       "description": "Create or modify HTTP route handlers, controllers, and request validation for backend APIs. Use when the user asks to add or scaffold a new API endpoint or needs HTTP request handling wired up with validation. Do not use for frontend-only work, client-side API call functions (use add-api-client-route), or documenting existing endpoints (use add-api-docs).",
       "tags": [],
       "path": "templates/skills/add-api-route.md",
-      "sha256": "39b25d9f8e5de3ae8d919aa1e9ee4855021726481286407faaea977ff3042abf",
+      "sha256": "fcac5ea4342dd58781cc71299c0ef27106048d721a0d9fa5d9a32288046c84f6",
       "usesFragments": [
         "rest-route-design",
         "request-validation",
@@ -200,7 +200,7 @@
       "description": "Scaffold a new reusable UI component with typed props, styling, and exports. Use when the user asks to create a new UI component, or to extract part of a page into its own component. Do not use for full routed pages (use add-react-page) or backend-only work, or when the component already exists and only needs edits.",
       "tags": [],
       "path": "templates/skills/add-component.md",
-      "sha256": "d4f4d5e24476b5aeb33f96f2c4abe4399cde7cff2e82308ce7ffe4a3e19be9b5",
+      "sha256": "923edd3f516810b6f606b3cbade40f1b614fc395fadf3d668c2d2c95f44f8227",
       "usesFragments": [
         "component-naming",
         "component-props",
@@ -213,7 +213,7 @@
       "description": "Add typed constants with proper naming, placement, and exports to the project's constants directory. Use when the user needs a new constant or enum-like value, wants to centralize a hardcoded value, or is replacing magic numbers. Do not use for environment-specific values (they belong in .env), runtime configuration that changes per deployment, or updating an existing constant's value.",
       "tags": [],
       "path": "templates/skills/add-constant.md",
-      "sha256": "efc5b9386985363a203a84c01e5e3cbaef2e9f39d80a1cff6dcf3589341c5803",
+      "sha256": "7dfb3623e13fc3fa3bb3cd173cbc8665a2b21a2765e68a4580ad498d9aae5c4b",
       "usesFragments": [
         "constants-conventions",
         "existing-patterns-first"
@@ -225,7 +225,7 @@
       "description": "Scaffold a complete set of RESTful CRUD endpoints (list, get, create, update, delete) for a resource. Use when the user needs a full CRUD API for a new resource or standard REST endpoints for one entity. Do not use for a single endpoint (use add-api-route), GraphQL mutations/queries, or RPC-style APIs.",
       "tags": [],
       "path": "templates/skills/add-crud-endpoint.md",
-      "sha256": "b2b74dc059f5097919fd9d1ccd343f0b19f99773acfd480f543e13a2151dee23",
+      "sha256": "566d838e1b2f04fb4c9e2e1445b10263868a5549066e7936e247f999f6e7b742",
       "usesFragments": [
         "crud-route-map",
         "rest-route-design",
@@ -239,7 +239,7 @@
       "description": "Generate React data-fetching hooks (query + mutations) for CRUD operations on a resource using React Query, SWR, or similar. Use when the user needs React hooks for fetching and mutating a resource or is wiring a frontend to a CRUD API. Do not use for backend-only work, non-React projects, or plain API client functions without hooks (use add-api-client-route).",
       "tags": [],
       "path": "templates/skills/add-crud-hook.md",
-      "sha256": "1a1e1297e744e3b9f8d6bcd762dbacebcb3debe999f7e5c580d7cf1013b16e1a",
+      "sha256": "eade647174a04fe8273e87ed8aa149b6b5b1097c0e6e516ead80ad8cc0c0337d",
       "usesFragments": [
         "existing-patterns-first"
       ]
@@ -250,7 +250,7 @@
       "description": "Create a Mongoose model with typed schema, indexes, hooks, and a TypeScript interface for MongoDB collections. Use when the user needs a new database model for a MongoDB collection or a new data entity backed by Mongoose. Do not use for other ORMs/ODMs (Prisma, Drizzle, TypeORM), API routes (use add-api-route), or validation-only schemas without persistence (use add-zod-schema).",
       "tags": [],
       "path": "templates/skills/add-mongoose-schema.md",
-      "sha256": "c1d7db6b90d079224b7826726bf473f327e9dee6bedde0b3d3733a5226bdbc29",
+      "sha256": "d49fbaa4caa881c80615e7e1b2f432124986ca0cedc164e3cb9a6671e182bdaf",
       "usesFragments": [
         "schema-design",
         "db-field-naming",
@@ -263,7 +263,7 @@
       "description": "Scaffold a new React page component with routing, data fetching, and layout integration. Use when the user asks to add a new page, view, or screen with a dedicated route. Do not use for reusable components (use add-component), backend-only work, or modifying an existing page.",
       "tags": [],
       "path": "templates/skills/add-react-page.md",
-      "sha256": "5ea7cae4d179035d8751a45689d3596921b5ef9a99fb0e2e123577daa0a0ba9f",
+      "sha256": "ee02dd52f6e34af9b1f436e15b90e9f2d8f37c6be4eac29edb7cff9ad4d63c1f",
       "usesFragments": [
         "existing-patterns-first"
       ]
@@ -274,7 +274,7 @@
       "description": "Define Zod validation schemas with inferred TypeScript types for request validation, form data, or domain models. Use when the user needs input validation for an endpoint or form, or a typed schema with runtime validation. Do not use for other validators (Joi, class-validator, Yup), database schemas (use add-mongoose-schema), or TypeScript types without runtime validation.",
       "tags": [],
       "path": "templates/skills/add-zod-schema.md",
-      "sha256": "d43fa39a2ba2ab500778acef828eac2d17c77ce3b6ba36aaa3e89b9be7bdf9e8",
+      "sha256": "27706ab08dd87209bb34835680365b24341d78ce9ddf1bf05c91521de279e73c",
       "usesFragments": [
         "request-validation",
         "existing-patterns-first"
@@ -286,7 +286,7 @@
       "description": "Evaluate a feature request and create a phased implementation plan for manageable PRs with cross-session context. Use for ANY new feature request (every feature gets a plan regardless of size), when a session starts with active entries in .claude/phases/PHASES.md, or to check progress on a phased feature. Do not use for refactors, cleanups, renames, bug fixes, documentation-only changes, or when the user explicitly wants everything in one PR.",
       "tags": [],
       "path": "templates/skills/phase-plan.md",
-      "sha256": "63ae3bda4241b73f89cfcf83370912f13d68df443703dc81d8e20eab97dd3aee",
+      "sha256": "792b4241b0b2c7606899e1094656706e622b96d266fa9632d7168cc7ad3677cb",
       "usesFragments": [
         "phase-criteria",
         "phase-requirements",
@@ -300,7 +300,7 @@
       "description": "Run the TypeScript compiler in check mode to find and fix type errors across the project. Use when the user asks to check for type errors, before committing changes that affect types or interfaces, or after refactoring shared interfaces. Do not use for non-TypeScript projects, runtime validation (use add-zod-schema), or ESLint/formatting/linting issues.",
       "tags": [],
       "path": "templates/skills/verify-types.md",
-      "sha256": "f3ecd5b7636091913ff6eb6e2211cd3e8f942c242694a50d1f21d5d5caa2f859",
+      "sha256": "4723c4a98a30cd256ed26b964840b89ba7c1113cb6649d3e6af82f4bd0c9366a",
       "usesFragments": [
         "typescript-strictness"
       ]

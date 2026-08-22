@@ -1,7 +1,7 @@
 import { CATALOG_KINDS, KIND_LABELS } from "../constants/registry"
 import type { CatalogItem } from "../types/catalog-item"
 import type { CatalogKind } from "../types/kind"
-import { installCommand, matchesFilters } from "../lib/catalog"
+import { installCommand, isInstallable, matchesFilters } from "../lib/catalog"
 import { useCatalogFilters } from "../hooks/use-catalog-filters"
 import { useCatalogItems } from "../hooks/use-catalog-items"
 import { useManifest } from "../hooks/use-manifest"
@@ -103,7 +103,7 @@ export function CatalogPage() {
                   description={item.description}
                   to={item.route}
                   tags={item.tags}
-                  copyCommand={item.kind === "hook" ? undefined : installCommand(item.kind, item.name)}
+                  copyCommand={isInstallable(item.kind) ? installCommand(item.kind, item.name) : undefined}
                 />
               ))}
             </div>

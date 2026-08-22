@@ -33,6 +33,14 @@ When you finish the implementation work for a phase, follow this protocol exactl
 
 ![[phase-plan-format]]
 
+## Assumptions to verify
+
+Inspect the project to confirm — do not assume:
+
+- Where the project root is (the directory containing `.git/`)
+- Whether `.claude/phases/PHASES.md` already tracks this feature
+- Whether the request is genuinely new functionality rather than a refactor or bug fix
+
 ## Conventions
 
 - Phase plan slugs are kebab-case derived from the feature name; branches are named `feat/{slug}-{phase-short-name}`.

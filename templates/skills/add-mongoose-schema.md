@@ -17,7 +17,7 @@ uses:
 6. Export the model: `export const $ARGUMENTS = model<I$ARGUMENTS>("$ARGUMENTS", schema)`.
 7. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

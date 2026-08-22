@@ -4,6 +4,8 @@ export const FRAGMENT_KINDS = ["convention", "template"] as const
 
 export const CATALOG_KINDS = ["pack", "agent", "skill", "rule", "hook", "fragment"] as const
 
+export const INSTALLABLE_KINDS = ["pack", "agent", "skill", "rule"] as const
+
 export const KIND_SEGMENTS = {
   pack: "packs",
   agent: "agents",

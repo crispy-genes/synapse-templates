@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest"
+import type { CatalogKind } from "../types/kind"
 import type { Manifest } from "../types/manifest"
 import {
   buildCatalogItems,
   hookBinding,
+  installCommand,
+  isInstallable,
   itemRoute,
   packComposition,
   packsContaining,
@@ -90,5 +93,31 @@ describe("hooks in the catalog", () => {
 
   it("counts hooks in pack composition", () => {
     expect(packComposition(manifest.packs[0])).toBe("1 hook")
+  })
+})
+
+describe("installCommand", () => {
+  // These must stay in lockstep with the CLI's subcommands — the strings below
+  // are what a visitor copies off a catalog page. See the matching contract
+  // test in synapse-cli: tests/commands/install-contract.test.ts.
+  it.each([
+    ["pack", "express", "synapse packs add --name express"],
+    ["agent", "backend", "synapse agents add --name backend"],
+    ["skill", "add-api-client-route", "synapse skills add --name add-api-client-route"],
+    ["rule", "code-style", "synapse rules add --name code-style"],
+  ] as const)("builds the %s install command", (kind, name, expected) => {
+    expect(installCommand(kind, name)).toBe(expected)
+  })
+})
+
+describe("isInstallable", () => {
+  it("covers the kinds the CLI can install by name", () => {
+    const kinds: CatalogKind[] = ["pack", "agent", "skill", "rule"]
+    expect(kinds.every(isInstallable)).toBe(true)
+  })
+
+  it("excludes hooks and fragments, which have no `add` subcommand", () => {
+    expect(isInstallable("hook")).toBe(false)
+    expect(isInstallable("fragment")).toBe(false)
   })
 })

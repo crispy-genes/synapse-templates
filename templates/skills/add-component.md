@@ -17,7 +17,7 @@ uses:
 5. Export it (named export preferred) and wire up any index/barrel file the project uses.
 6. Run the project's type check and confirm no errors.
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 

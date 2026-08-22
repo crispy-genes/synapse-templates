@@ -1,13 +1,17 @@
-import { KIND_SEGMENTS } from "../constants/registry"
+import { INSTALLABLE_KINDS, KIND_SEGMENTS } from "../constants/registry"
 import type { CatalogItem } from "../types/catalog-item"
-import type { CatalogKind } from "../types/kind"
+import type { CatalogKind, InstallableKind } from "../types/kind"
 import type { Manifest } from "../types/manifest"
 import type { PackEntry } from "../types/pack"
 import type { TemplateEntry, TemplateType } from "../types/template"
 import type { UsedBy } from "../types/used-by"
 import { closureIds } from "./resolve"
 
-export function installCommand(kind: CatalogKind, name: string): string {
+export function isInstallable(kind: CatalogKind): kind is InstallableKind {
+  return (INSTALLABLE_KINDS as readonly CatalogKind[]).includes(kind)
+}
+
+export function installCommand(kind: InstallableKind, name: string): string {
   return `synapse ${KIND_SEGMENTS[kind]} add --name ${name}`
 }
 

@@ -22,7 +22,7 @@ uses:
 
 ![[crud-route-map]]
 
-## Before you start
+## Assumptions to verify
 
 Inspect the codebase to confirm — do not assume:
 
