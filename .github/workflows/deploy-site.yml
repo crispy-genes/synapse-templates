@@ -39,15 +39,9 @@ jobs:
           pnpm typecheck
           pnpm test
           pnpm build
-      - name: Assemble site
-        run: |
-          mkdir _site
-          cp -R site/dist/. _site/
-          cp -R v1 _site/v1
-          cp -R templates _site/templates
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: site/dist
       - id: deployment
         uses: actions/deploy-pages@v4
